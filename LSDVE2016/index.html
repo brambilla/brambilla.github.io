@@ -1,0 +1,521 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>ADGT.js</title>
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/black-unipr.css">
+
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section>
+                    <h3>Adgt.js: a Web Application Framework for Peer-to-Peer Location-Based Services</h3>
+                    <h5><u>Giacomo Brambilla</u>, Michele Amoretti and Francesco Zanichelli</h5>
+                    <p>Distributed Systems Group - Università degli Studi di Parma</p>
+                    <br>
+                    <br>
+                    <p>LSDVE 2016, Grenoble, 23 August 2016</p>
+                </section>
+
+                <section>
+                    <h3>Location-Based Services</h3>
+                    <p>In recent years, there has been a growing attention to Location-Based Services, <i>i.e.</i>, software-level services that use location data to control features.</p>
+                    <img width="50%" data-src="images/lbs.jpg" alt="LBS">
+                </section>
+
+                <section>
+                    <h3>Swarm</h3>
+                    <img width="70%" data-src="images/swarm.png" alt="swarm">
+                </section>
+
+                <section>
+                    <h3>Facebook Places</h3>
+                    <img width="90%" data-src="images/facebook-places.png" alt="facebook-places">
+                </section>
+
+                <section>
+                    <h3>Foursquare</h3>
+                    <img width="75%" data-src="images/foursquare.png" alt="foursquare">
+                </section>
+
+                <section>
+                    <h3>Pokémon Go</h3>
+                    <img width="85%" data-src="images/pokemon-go.jpg" alt="pokemon-go">
+                </section>
+
+                <section>
+                    <h3>Others…</h3>
+                    <ul>
+                        <li>Search for people, business activities or services and locating them on a map</li>
+                        <li>Turn-by-turn navigation</li>
+                        <li>Location-Based mobile advertising</li>
+                        <li>Alerting and notification of events</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>The majority of existing Location-Based Services lie on powerful and expensive centralized systems, that only a few large companies can afford.</p>
+                    <br>
+                    <p>Moreover, from the privacy viewpoint it is not advisable that all data are controlled by a single organization.</p>
+                </section>
+
+                <section>
+                    <h3>Peer-to-Peer</h3>
+                    <img width="45%" style="border:none; background:none; box-shadow:none;" data-src="images/peer-to-peer.png" alt="peer-to-peer">
+                    <p>We decided to study a peer-to-peer overlay scheme that fulfills all the requirements that are essential to Location-Based Services.</p>
+                </section>
+
+                <section>
+                    <h2>Adaptive Distributed Geographic Table</h2>
+                </section>
+
+                <section>
+                    <p>Traditional peer-to-peer overlay schemes, such as <b>Kademlia</b> [1] or <b>Chord</b> [2], are not particularly suitable for Location-Based Services, since they completely ignore geographical distances between peers of the network.</p>
+                    <br>
+                    <br>
+                    <p style="font-size:medium; text-align:left;">
+                        [1] Petar Maymounkov and David Mazières: "Kademlia: A Peer-to-peer information system based on the XOR Metric", Lecture Notes in Computer Science, April 2002
+                        <br>
+                        <br>
+                        [2] Robert Morris <i>et al.</i>: "Chord: A scalable peer-to-peer lookup service for internet applications", ACM SIGCOMM 2001, September 2001
+                    </p>
+                </section>
+
+                <section>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th style="font-size:x-large; text-align:center;">GeoPeer [3]</th>
+                                <th style="font-size:x-large; text-align:center;">Globase.KOM [4]</th>
+                                <th style="font-size:x-large; text-align:center;">Geodemlia [5]</th>
+                                <th style="font-size:x-large; text-align:center;">Overdrive [6]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-size:x-large;">Mobility of peers</td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle"></td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle"></td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle"></td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle">✓</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:x-large;">Speed and direction of peers</td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle"></td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle"></td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle"></td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle">✓</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:x-large;">Geographic broadcast</td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle">✓</td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle">✓</td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle">✓</td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle">✓</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:x-large;">Completely peer-to-peer</td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle">✓</td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle"></td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle">✓</td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle">✓</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:x-large; color:red">Adaptive overlay scheme</td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle"></td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle"></td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle"></td>
+                                <td style="font-size:x-large; text-align:center; vertical-align:middle"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <p style="font-size:medium; text-align:left;">
+                        [3] Filipe Araújo and Luís Rodrigues: "Geopeer: A Location-Aware Peer-to-Peer System", Network Computing and Applications 2004, August 2004
+                        <br>
+                        <br>
+                        [4] Aleksandra Kovacevic <i>et al.</i>: "Globase.KOM - A P2P Overlay for Fully Retrievable Location-based Search", IEEE International Conference on Peer-to-Peer Computing, September 2007
+                        <br>
+                        <br>
+                        [5] Christian Gross <i>et al.</i>: "Geodemlia: Persistent Storage and Reliable Search for Peer-to-Peer Location-Based Services", IEEE International Conference on Peer-to-Peer Computing, September 2013
+                        <br>
+                        <br>
+                        [6] Bernhard Heep <i>et al.</i>: "Overdrive an overlay-based geocast service for smart traffic applications", Wireless On-demand Network Systems and Services Conference, March 2013 
+                    </p>
+                </section>
+
+                <section>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th style="font-size:x-large;text-align:center;">ADGT [7]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-size:x-large;">Mobility of peers</td>
+                                <td style="text-align:center;">✓</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:x-large;">Speed and direction of peers</td>
+                                <td style="text-align:center;">✓</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:x-large;">Geographic broadcast</td>
+                                <td style="text-align:center;">✓</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:x-large;">Completely peer-to-peer</td>
+                                <td style="text-align:center;">✓</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:x-large;color:green">Adaptive overlay scheme</td>
+                                <td style="text-align:center; color:green">✓</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <p style="font-size:xx-large;">The <b>Adaptive Distributed Geographic Table (ADGT)</b> is the only peer-to-peer overlay scheme that adapts the topology of the network based on peers' movements, speed and direction.</p>
+                    
+                    <p style="font-size:medium; text-align:left;">
+                        [7] Giacomo Brambilla <i>et al.</i>: "An Adaptive Peer-to-Peer Overlay Scheme for Location-Based Services", IEEE International Symposium on Network Computing and Applications, August 2014
+                    </p>
+                </section>
+
+                <section>
+                    <h3>General concepts</h3>
+                    <div>
+                        Each peer $ p $ is described by $ \langle id_{p}, w_{p} \rangle $
+                        <br>
+                        <br>
+                        <ul>
+                            <li>$ id_{p} \in \mathcal{I} $, the space of unique identifiers</li>
+                            <li>$ w_{p} = (latitude_{p}, longitude_{p}) \in \mathcal{W} $, the space of geographic coordinates</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>General concepts</h3>
+                    <p style="font-size:xx-large;">Distance between peers $ p $ and $ q $ is evaluated as the great-circle distance, which is the shortest distance between two points on the surface of a sphere, measured along the surface of the sphere itself.</p>
+                    <img width="40%" style="background:white;" data-src="images/great-circle-distance.svg" alt="great-circle-distance">
+                </section>
+
+                <section>
+                    <h3>General concepts</h3>
+                    <p>The neighbourhood of peer $ p $ is defined as the set of peers that are geographically close to $ w_{p} $, in other words, those peers which are located inside a geographical region surrounding $ w_{p} $.</p>
+                </section>
+
+                <section>
+                    <h3>Neighbourhood</h3>
+                    <p>Apart from ADGT, in the other peer-to-peer overlays the neighbourhood of a peer is within a circular region centered on its geographical location.</p>
+                    <img width="60%" data-src="images/circular.png" alt="circular">
+                </section>
+
+                <section>
+                    <h3>Neighbourhood</h3>
+                    <div>
+                    <p style="font-size:xx-large; float:left;"><span class="fragment fade-up">A vehicle moving slowly<br>along the streets of a small town</span><br><span class="fragment fade-up">&darr;</span><br><span class="fragment fade-up">interested in receiving information<br>from all the directions</span></p>
+                    <p style="font-size:xx-large; float:right;"><span class="fragment fade-up">A vehicle travelling along a highway<br>at high speed</span><br><span class="fragment fade-up">&darr;</span><br><span class="fragment fade-up">concerned with the information<br>that comes along its travel direction</span></p>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <p class="fragment fade-up">The region of interest varies depending on the mobility of the vehicle</p>
+                </section>
+
+                <section>
+                    <h3>Adaptive Neighbourhood</h3>
+                    <p>In ADGT, we have switched from the typical circular region of neighbourhood, to an elliptical one, where both the semi axes of the ellipse depend on the velocity of the peer, <i>i.e.</i>, vary depending on the direction and speed of the peer.</p>
+                    <img width="60%" data-src="images/elliptical.png" alt="elliptical">
+                </section>
+
+                <section>
+                    <h3>Adaptive Neighbourhood</h3>
+                    <p>The idea behind such elliptical regions is that the higher is the speed of the peer, the higher is the eccentricity of the ellipses.</p>
+                    <p>Also, the direction of the semi-major axis coincides with the direction of movement of the peer.</p>
+                </section>
+
+                <section>
+                    <h3>GeoBucket</h3>
+                    <p>In ADGT, each peer stores a set of lists of neighbours, called <b>GeoBucket</b>, each list being sorted according to the distance from the center that the GeoBuckets have in common.</p>
+                    <p>Formally, a GeoBucket structure is defined as a group of $ K $ different concentric ellipses, each having a different semi-major axis $ a_{i} $ and semi-minor axis $ b_{i} $, with $ i $ integer $ \in [1, K] $.</p>
+                </section>
+
+                <section>
+                    <h3>GeoBucket</h3>
+                    <div>
+                        \[\begin{aligned}
+                        a_{i} &amp; = i \cdot t_{i} \cdot (1 + S \cdot \frac{v}{V_{max}}) \\
+                        b_{i} &amp; = i \cdot t_{i} \cdot \frac{V_{max}}{V_{max} + S \cdot v})
+                        \end{aligned} \]
+                    </div>
+                    <br>
+                    <ul>
+                        <li>$ v $ is the value of the speed of the peer</il>
+                        <li>$ V_{max} $ is a constant value which represents the maximum speed</il>
+                        <li>$ t_{i} $ is the thickness between each GeoBucket</il>
+                        <li>$ S $ is a parameter that relates the speed of the peer to the shape of the GeoBucket</il>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>GeoBucket</h3>
+                    <p>ADGT has a <i>peer discovery</i> mechanism similar to the one adopted by Kademlia, that allows GeoBucket to be regularly updated in order to have the latest peers' geographical locations.</p>
+                </section>
+
+                <section>
+                    <h3>Evaluation</h3>
+                    <p>ADGT has been intensively evaluated through simulation in different scenarios of mobility, obtaining very promising results [7].</p>
+                    <img width="38%" data-src="images/osmobility.png" alt="osmobility">
+                    <p style="font-size:medium; text-align:left;">
+                        [7] Giacomo Brambilla <i>et al.</i>: "An Adaptive Peer-to-Peer Overlay Scheme for Location-Based Services", IEEE International Symposium on Network Computing and Applications, August 2014
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Implementation</h2>
+                </section>
+
+                <section>
+                    <p>The idea behind our implementation is the complete interoperability among devices as much as possible different – both from the hardware point of view, and in terms of installed software.</p>
+                </section>
+
+                <section>
+                    <h3>"The Web is the platform"</h3>
+                    <p>While initially web browsers were designed only to display information provided by web servers, they are becoming the real cross-platform technology, being able to truly realize the <i>"write once, run everywhere"</i> unfulfilled promise of Java related technologies.</p>
+                </section>
+
+                <section>
+                    <h3>WebRTC</h3>
+                    <p>WebRTC enables data streaming between browser clients without the need to install plugins or third-party software, implying a strong integration between the content presented by the browser and the real-time content.</p>
+                    <p>With WebRTC, web browsers become peers of a real P2P network, being capable to exchange data in an unmediated fashion.</p>
+                </section>
+
+                <section>
+                    <h3>WebRTC</h3>
+                    <ul>
+WebRTC implements the following APIs:
+                        <li><b>MediaStream</b>, which represents synchronized streams of media such as user's camera and microphone</li>
+                        <li><b>RTCPeerConnection</b>, which handles stable and efficient communication of streaming data between peers, with facilities for encryption and bandwidth management</li>
+                        <li><b>RTCDataChannel</b>, which enables P2P exchange of arbitrary data, with low latency and high throughput</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>RTCPeerConnection</h3>
+                    <p><code>RTCPeerConnection</code> hides all the complexities of WebRTC to web developers, allowing audio and video streaming using the Secure Real-Time Transport (SRTP) protocol, which is real-time, and provides encryption, message authentication and integrity to transmitted data.</p>
+                </section>
+
+                <section>
+                    <h3>RTCPeerConnection</h3>
+                    <p>Moreover <code>RTCPeerConnection</code> offers the <b>Interactive Connectivity Establishment (ICE)</b>, a technique to overcome the complexities of real-world networking, where most devices live behind one or more NAT layers, some have anti-virus software that blocks certain ports and protocols, and many are behind proxies and corporate firewalls.</p>
+                </section>
+
+                <section>
+                    <h3>ICE</h3>
+                    <img width="70%" data-src="images/ice.png" alt="ice">
+                </section>
+
+                <section>
+                    <h3>RTCDataChannel</h3>
+                    <p>The <code>RTCDataChannel</code> interface works with <code>RTCPeerConnection</code> and allows to transfer arbitrary data directly from one peer to another, using the Stream Control Transmission Protocol (SCTP).</p>
+                </section>
+
+                <section>
+                    <h3>WebSocket</h3>
+                    <p>The <code>WebSocket</code> specification defines an API establishing an interactive communication session between a web browser and a server.</p>
+                    <p>With this API, the client and the server can make a persistent full-duplex connection between them and send data to each other at any time.</p>
+                </section>
+
+                <section>
+                    <h3>WebRTC and WebSocket</h3>
+                    <img width="85%" style="border:none; background:none; box-shadow:none;" data-src="images/protocols.png" alt="protocols">
+                </section>
+
+                <section>
+                    <h3>Geolocation</h3>
+                    <p>The <code>Geolocation</code> API defines a high-level interface to location information associated with the device.</p>
+                    <p>The API itself is agnostic of the underlying location information sources: location can be indiscriminately obtained from a Global Positioning System (GPS), inferred from network signals such as IP address, RFID, Wi-Fi and Bluetooth MAC addresses, and GSM/CDMA cell IDs, as well as user input.</p>
+                </section>
+
+                <section>
+                    <p>The ADGT protocol has been implemented using web technologies only.</p>
+                    <p>Our implementation, named <b>adgt.js</b>, has been designed as an ECMAScript 6 software library that can be freely used for the realization of P2P-based LBSs.</p>
+                </section>
+
+                <section>
+                    <h3>Signaling</h3>
+                    <p>Signaling methods and protocols, <i>i.e.</i>, the mechanisms required to coordinate communication and to send control messages, are not specified by WebRTC.</p>
+                    <p>We have decided to distribute the responsibility to act as signaling servers among all the peers of the network, using <code>DataChannels</code>.</p>
+                </section>
+
+                <section>
+                    <h3>Signaling</h3>
+                    <p>The peer discovery operation has been implemented in a way that when a peer receives the list of neighbors from the peer that has contacted, the latter acts also as a signaling server between the first and the possible peers which have to be contacted.</p>
+                </section>
+
+                <section>
+                    <h3>Signaling</h3>
+<!--                https://www.websequencediagrams.com/ -->
+<!--                Alice->Charlie: Discovery Request -->
+<!--                Charlie->Alice: Discovery Response -->
+<!--                note left of Alice: Alice selects Bob from Charlie's response -->
+<!--                Alice->Charlie: Offer (to Bob) -->
+<!--                Charlie->Bob: Offer (from Alice) -->
+<!--                Alice->Charlie: ICE (to Bob) -->
+<!--                Charlie->Bob: ICE (from Alice) -->
+<!--                Bob->Charlie: Answer (to Alice) -->
+<!--                Charlie->Alice: Answer (from Bob) -->
+<!--                Bob->Charlie: ICE (to Alice) -->
+<!--                Charlie->Alice: ICE (from Bob) -->
+
+<!--                Bob->Alice: Position Update -->
+
+                    <img width="70%" data-src="images/signaling.png" alt="signaling">
+                </section>
+
+                <section>
+                    <h3>Signaling</h3>
+                    <img width="70%" data-src="images/adgt.png" alt="adgt">
+                </section>
+
+                <section>
+                    <h3>Bootstrapping Node</h3>
+                    <p>Since it is not always possibile to use another peer as a signaling server, <i>e.g.</i>, when the peer joins the P2P network, we have implemented a signaling server using the <b>Node.js</b> framework and the <code>WebSocket</code> protocol.</p>
+                </section>
+
+                <section>
+                    <h2>adgt.js</h2>
+                </section>
+
+                <section>
+                    <p>To design and implement peer-to-peer LBSs with <b>adgt.js</b> is easy, not much different from making a simple web page.</p>
+                </section>
+
+                <section>
+                    <h3>Creating a new peer</h3>
+                    <pre><code class="hljs" data-trim contenteditable>
+var peer = new Peer(options);
+peer.connect();
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Listeners for events</h3>
+                    <pre><code class="hljs" data-trim contenteditable>
+peer.on('neighbors', function(descriptors) {
+    //do something
+});
+
+peer.on('data', function(data) {
+    //do something
+});
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Sending data to neighbours</h3>
+                    <pre><code class="hljs" data-trim contenteditable>
+peer.send(data);
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Updating peer's position</h3>
+                    <pre><code class="hljs" data-trim contenteditable>
+peer.move(position);
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>A Location-Based Service</h2>
+                </section>
+
+                <section>
+                    <p>We have implemented a LBS that illustrates the ease of use of adgt.js and represents a building block for more sophisticated applications.</p>
+                    <p>The LBS shows on a map the peers connected to the network, <i>i.e.</i>, visitors of <b>this</b> web page, that are at a maximum distance of 40 km.</p>
+                    <p>Neighbor discovery and connection establishment is entrusted to adgt.js</p>
+                </section>
+
+                <section>
+                    <p>This LBS only requires to update the geographic location of the peer and change the marker on a map with the position of the browser obtained with the <code>Geolocation</code> API.</p>
+                    <p>In addition, when a change in the neighborhood happens, all the markers on the map representing neighbors are updated.</p>
+                </section>
+
+                <section data-background-iframe="https://brambilla.github.io/map/index.html">
+                </section>
+
+                <section>
+                    <h2>Conclusion</h2>
+                </section>
+
+                <section>
+                    <p>adgt.js enables the realization of completely decentralized LBSs, being a cross-platform implementation of the ADGT georeferenced P2P overlay scheme.</p>
+                    <p>In future work, we will investigate the performance of the implemented framework, with respect to technological aspects such as battery drain of mobile devices, also compared with previous results obtained in simulation.</p>
+                </section>
+
+                <section>
+                    <h3>Adgt.js: a Web Application Framework for Peer-to-Peer Location-Based Services</h3>
+                    <h5><u>Giacomo Brambilla</u>, Michele Amoretti and Francesco Zanichelli</h5>
+                    <p>Distributed Systems Group - Università degli Studi di Parma</p>
+                    <br>
+                    <br>
+                    <p>LSDVE 2016, Grenoble, 23 August 2016</p>
+                </section>
+
+            </div>
+
+            <div class='footer'>
+                <div class='left-footer'>
+                    LSDVE 2016, Grenoble, 23 August 2016
+                </div>
+                <div class='right-footer'>
+                    adgt.js
+                </div>
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+            // More info https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                history: true,
+                controls: false,
+                // More info https://github.com/hakimel/reveal.js#dependencies
+                dependencies: [
+                    { src: 'plugin/markdown/marked.js' },
+                    { src: 'plugin/markdown/markdown.js' },
+                    { src: 'plugin/notes/notes.js', async: true },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/math/math.js', async: true }
+                ]
+            });
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Riuso del codice - Programmazione orientata agli oggetti in Java</title>
+
+        <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+        <meta name="author" content="Hakim El Hattab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+        <!-- Code syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Riuso del codice</h1>
+                    <h3>Programmazione orientata agli oggetti in Java</h3>
+                    <p><small>Giacomo Brambilla</small></p>
+                    <p><small><a href="http://www.dii.unipr.it">Dipartimento di Ingegneria dell'Informazione</a> - <a href="http://www.unipr.it">Università degli Studi di Parma</a></small></p>
+                    <p><small><a href="https://brambilla.github.io">https://brambilla.github.io</a></small></p>
+                </section>
+
+                <section>
+                    <h2>Riutilizzare le classi</h2>
+                    <p>Una delle caratteristiche più importanti di Java (in generale della programmazione orientata agli oggetti) è il riuso del codice.</p>
+                    <p>Con riuso del codice non si intende i semplici copia, incolla e modifica. Questo approccio è utilizzato nei linguaggi procedurali come il C e non funziona molto bene.</p>
+                    <p>Come per tutto il resto in Java, anche il riuso ha a che fare con le classi. Infatti, si ottiene il riuso del codice creando nuove classi, ma al posto di crearle dal nulla, si utilizzano classi già esistenti che qualcuno ha già progettato.</p>
+                </section>
+
+                <section>
+                    <h2>Riutilizzare le classi</h2>
+                    <p>Il trucco è utilizzare le classi senza perdere il codice esistente.</p>
+                    <p>Vedremo due modi per ottenere riuso in Java.</p>
+                </section>
+
+                <section>
+                    <h2>Riutilizzare le classi</h2>
+                    <p>Il primo modo è abbastanza semplice: si creano oggetti di classi esistenti all'interno della nuova classe.</p>
+                    <p>Questo modo è chiamato <em>composizione</em>, poiché la nuova classe è composta da oggetti di classi esistenti.</p>
+                    <p>Si riutilizza la funzionalità del codice, non la sua forma.</p>
+                </section>
+
+                <section>
+                    <h2>Riutilizzare le classi</h2>
+                    <p>Il secondo approccio è più sottile: si crea una nuova classe dello stesso tipo di una classe esistente.</p>
+                    <p>Letteralmente si prende una classe esistente e si aggiunge il codice a questa senza modificarla.</p>
+                    <p>Questa tecnica si chiama <em>ereditarietà</em> e gran parte del lavoro è svolto dal compilatore.</p>
+                    <p>L'ereditarietà è uno dei principi fondamentali della programmazione orientata agli oggetti e ha importanti implicazioni addizionali come il <em>polimorfismo</em>.</p>
+                </section>
+
+                <section>
+                    <h2>Composizione</h2>
+                    <p>La composizione in realtà è già stata utilizzata precedentemente. Basta semplicemente utilizzare riferimenti a oggetti all'interno delle nuove classi.</p>
+                    <p>Per esempio, supponiamo di voler un oggetto che abbia diversi oggetti di tipo <strong>String</strong>, un paio di primitive e un oggetto di un'altra classe. Per gli oggetti non primitivi, si inseriscono i riferimenti nella nuova classe. Le primitive invece si definiscono direttamente.</p>
+                </section>
+
+                <section>
+                    <h2>Composizione</h2>
+                     <pre><code class="hljs" data-trim contenteditable>
+public class SprinklerSystem {
+
+    private String valve1, valve2, valve3;
+    private WaterSource source = new WaterSource();
+    private int i;
+    private float f;
+
+    public String toString() {
+        return
+            "valve1 = " + valve1 + " " +
+            "valve2 = " + valve2 + " " +
+            "valve3 = " + valve3 + "\n" +
+            "i = " + i + " " + "f = " + f + " " +
+            "source = " + source;
+    }
+
+    public static void main(String[] args) {
+        SprinklerSystem sprinklers = new SprinklerSystem();
+        System.out.println(sprinklers);
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Composizione</h2>
+                     <pre><code class="hljs" data-trim contenteditable>
+class WaterSource {
+ 
+   private String s;
+
+    WaterSource() {
+        System.out.println("WaterSource()");
+        s = "Constructed";
+    }
+
+    public String toString() {
+        return s;
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Metodo toString()</h2>
+                    <p>Uno dei metodi definiti in entrambe le classi è speciale: <strong>toString()</strong>.</p>
+                    <p>Ogni oggetto non primitivo ha un metodo <strong>toString()</strong> che viene invocato in situazioni particolari quando il compilatore vuole una <strong>String</strong> ma ha un oggetto di un tipo differente.</p>
+                </section>
+
+                <section>
+                    <h2>Metodo toString()</h2>
+                    <p>Nell'espressione del metodo <strong>toString()</strong> della classe <strong>SprinklerSystem</strong>, il compilatore vede che si sta cercando di aggiungere un oggetto <strong>String</strong> (<strong>"source = "</strong>) a un oggetto <strong>WaterSource</strong>.</p>
+                    <p>Poiché è possibile solamente aggiungere una <strong>String</strong> ad un'altra <strong>String</strong>, questo viene tradotto: "Convertirò <strong>source</strong> in una <strong>String</strong> invocando <strong>toString()</strong>!".</p>
+                    <p>Dopo aver fatto questo, può combinare le due <strong>String</strong> e passare la <strong>String</strong> risultante a <strong>System.out.println()</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>Inizializzazione</h2>
+                    <p>I tipi primitivi che sono campi di una classe sono automaticamente inizializzati al loro valore di default.</p>
+                    <p>I riferimenti agli oggetti sono inizializzati a <strong>null</strong> e cercando di invocare i loro metodi, si otterrà un'eccezione. Fortunamente è possibile stampare un riferimento a <strong>null</strong> senza sollevare eccezioni.</p>
+                    <p>Ha senso che il compilatore non crei un oggetto di default per ogni riferimento poiché questo porterebbe ad un utilizzo eccessivo e spesso non necessario della memoria.</p>
+                </section>
+
+                <section>
+                    <h2>Inizializzazione</h2>
+                    <p>Per inizializzare i riferimenti, vi sono diversi modi:</p>
+                    <p class = "fragment">al momento della definizione degli oggetti (questo significa che saranno sempre inizializzati prima che il costruttore sia chiamato)</p>
+                    <p class="fragment">nel costruttore della classe</p>
+                    <p class="fragment">appena prima di utilizzare effettivamente l'oggetto (è spesso chiamata <em>lazy initialization</em> e può ridurre l'utilizzo di memoria quando la creazione dell'oggetto è dispendiosa e l'oggetto non ha bisogno di essere creato ogni volta)</p>
+                    <p class="fragment">utilizzando l'<em>instance initialization</em></p>
+                </section>
+
+                <section>
+                    <h2>Inizializzazione</h2>
+                     <pre><code class="hljs" data-trim contenteditable>
+class Soap {
+
+    private String s;
+
+    Soap() {
+        print("Soap()");
+        s = "Constructed";
+    }
+
+    public String toString() {
+        return s;
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Inizializzazione</h2>
+                     <pre><code class="hljs" data-trim contenteditable>
+public class Bath {
+
+    private String // Inizializzazione al momento della definizione:
+        s1 = "Happy",
+        s2, s3;
+    private Soap castille;
+    private int i;
+    private float toy;
+
+    public Bath() {
+        System.out.println("Inside Bath()");
+        s2 = "Joy";
+        toy = 3.14f;
+        castille = new Soap();
+    }
+    
+    // Instance initialization:
+    { i = 47; }
+
+    public String toString() {
+        if(s3 == null) { // Lazy initialization:
+            s3 = "Joy";
+        }
+        return
+            "s1 = " + s1 + "\n" +
+            "s2 = " + s2 + "\n" +
+            "s3 = " + s3 + "\n" +
+            "i = " + i + "\n" +
+            "toy = " + toy + "\n" +
+            "castille = " + castille;
+    }
+    
+    public static void main(String[] args) {
+        Bath b = new Bath();
+        System.out.println(b);
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Esercizio</h2>
+                    <ul>
+                        <li>Creare una classe. Dentro una seconda classe, definire un riferimento a un oggetto della prima classe. Utilizzare la <em>lazy initialization</em> per istanziare questo oggetto.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Ereditarietà</h2>
+                    <p>L'ereditarietà è una parte fondamentale di Java (e di tutti i linguaggi OOP). In particolare, in Java si utilizza sempre l'ereditarietà quando si crea una classe, poiché a meno che non la si applichi direttamente, implicitamente si eredita dalla classe <strong>Object</strong>.</p>
+                    <p>Quando si eredita, significa: "Questa nuova classe è come quella vecchia classe".</p>
+                </section>
+
+                <section>
+                    <h2>Ereditarietà</h2>
+                    <p>Nel codice, questo concetto è espresso utilizzando la parola chiave <strong>extends</strong> prima dell'apertura delle parentesi graffe del corpo della classe, seguita dal nome della <em>classe base</em>.</p>
+                    <p>Così facendo, automaticamente si ottengono tutti i campi e i metodi della classe base.</p>
+                </section>
+
+                <section>
+                    <h2>Ereditarietà</h2>
+                     <pre><code class="hljs" data-trim contenteditable>
+class Cleanser {
+
+    private String s = "Cleanser";
+
+    public void append(String a) {
+        s += a;
+    }
+
+    public void dilute() {
+        append(" dilute()");
+    }
+
+    public void apply() {
+        append(" apply()");
+    }
+
+    public void scrub() {
+        append(" scrub()");
+    }
+
+    public String toString() {
+        return s;
+    }
+
+    public static void main(String[] args) {
+        Cleanser x = new Cleanser();
+        x.dilute();
+        x.apply();
+        x.scrub();
+        System.out.println(x);
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Ereditarietà</h2>
+                     <pre><code class="hljs" data-trim contenteditable>
+public class Detergent extends Cleanser {
+
+    // Modifica di un metodo:
+    public void scrub() {
+        append(" Detergent.scrub()");
+        super.scrub(); // Chiamata al metodo della classe base
+    }
+    
+    // Aggiunta di un metodo all'interfaccia:
+    public void foam() {
+        append(" foam()");
+    }
+    
+    public static void main(String[] args) {
+        Detergent x = new Detergent();
+        x.dilute();
+        x.apply();
+        x.scrub();
+        x.foam();
+        System.out.println(x);
+        System.out.println("Testing base class:");
+        Cleanser.main(args);
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Ereditarietà</h2>
+                    <p>Nel metodo <strong>append()</strong> di <strong>Cleanser</strong>, le <strong>String</strong> sono concatenate a <strong>s</strong> utilizzando l'operatore <strong>+=</strong> che è uno degli operatori che gli sviluppatori Java hanno introdotto per utilizzare le <strong>String</strong>.</p>
+                    <p>Sia <strong>Cleanser</strong> sia <strong>Detergent</strong> contengono un metodo <strong>main()</strong>. È possibile creare un <strong>main()</strong> per ogni classe; in questo modo è possibile effettuare dei test per ogni classe. E non è necessario rimuovere il <strong>main()</strong> quando si ha finito; è possibile lasciarlo per ulteriori test successivi.</p>
+                </section>
+
+                <section>
+                    <h2>Ereditarietà</h2>
+                    <p>Anche se si hanno numerose classi in un programma, solo il metodo <strong>main()</strong> della classe invocata dalla linea di comando sarà chiamato.</p>
+                    <p>In questo caso, quando si digita <em>java Detergent</em>, viene invocato <strong>Detergent.main()</strong>. Ma è anche possibile digitare <em>java Cleanser</em> per invocare <strong>Cleanser.main()</strong> anche se <strong>Cleanser</strong> non è una classe <strong>public</strong>.</p>
+                    <p>Come si vede, <strong>Detergent.main()</strong> chiama <strong>Cleanser.main()</strong> esplicitamente, passando gli stessi argomenti della linea di comando. (È comunque possibile passare un qualsiasi array di <strong>String</strong>).</p>
+                </section>
+
+                <section>
+                    <h2>Ereditarietà</h2>
+                    <p>Se una classe di un package diverso da quello di <strong>Cleanser</strong> vuole ereditare da <strong>Cleanser</strong> i suoi membri, occorre che questi siano <strong>public</strong>.</p>
+                    <p>Quindi per permettere l'ereditarietà, una regola generale è di porre tutti i campi <strong>private</strong> e tutti i metodi <strong>public</strong>, modificando opportunamente a seconda della situazione.</p>
+                </section>
+
+                <section>
+                    <h2>Ereditarietà</h2>
+                    <p><strong>Cleanser</strong> ha un insieme di metodi nella sua interfaccia: <strong>append()</strong>, <strong>dilute()</strong>, <strong>apply()</strong>, <strong>scrub()</strong> e <strong>toString()</strong>.</p>
+                    <p>Poiché <strong>Detergent</strong> è <em>derivata</em> da <strong>Cleanser</strong> (attraverso la parola chiave <strong>extends</strong>), automaticamente ottiene tutti i metodi della sua interfaccia, anche se non sono esplicitamente definiti in <strong>Detergent</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>Ereditarietà</h2>
+                    <p>Come si vede per il metodo <strong>scrub()</strong>, è possibile prendere un metodo definito in una classe base e modificarlo. In questo caso, potrebbe essere necessario invocare il metodo della classe base dalla nuova classe.</p>
+                    <p>Per fare ciò, Java utilizza la parola chiave <strong>super</strong> che si riferisce alla superclasse da cui la classe corrente eredita. Quindi l'espressione <strong>super.scrubs()</strong> invoca il metodo <strong>scrub()</strong> della classe base.</p>
+                </section>
+
+                <section>
+                    <h2>Ereditarietà</h2>
+                    <p>Quando si eredita non si è obbligati a utilizzare i soli metodi della classe base. È possibile aggiungere nuovi metodi esattamente come se fosse una classe normale: basta definirli. Il metodo <strong>foam()</strong> ne è un esempio.</p>
+                    <p>In <strong>Detergent.main()</strong> è possibile vedere come, per un oggetto di tipo <strong>Detergent</strong> si possono chiamare tutti i metodi disponibili in <strong>Cleanser</strong> così come quelli definiti in <strong>Detergent</strong> stessa.</p>
+                </section>
+
+                <section>
+                    <h2>Esercizio</h2>
+                    <ul>
+                        <li>Estendere una nuova classe da <strong>Detergent</strong>, sovrascrivere il metodo <strong>scrub()</strong> e aggiungere un nuovo metodo <strong>sterilize()</strong>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Inizializzare la classe base</h2>
+<p>Poiché ora ci sono due classi coinvolte (la classe base e la classe derivata) invece che una sola, potrebbe creare un po' di confusione cercare di immaginare l'oggetto risultante prodotto da una classe derivata.</p>
+<p>Da un punto di vista esterno, sembrerebbe che la nuova classe abbia solamente la stessa interfaccia della classe base e forse qualche metodo e campo addizionale. Ma l'ereditarietà non è una semplice copia dell'interfaccia della classe base.</p>
+                </section>
+
+                <section>
+                    <h2>Inizializzare la classe base</h2>
+                    <p>Quando si crea un oggetto di una classe derivata, questo contiene al suo interno anche un sotto-oggetto della classe base. Questo sotto-oggetto è lo stesso che si avrebbe se si fosse creato un oggetto della classe base. Dall'esterno è come se questo sotto-oggetto della classe base fosse contenuto all'interno dell'oggetto della classe derivata.</p>
+                </section>
+
+                <section>
+                    <h2>Inizializzare la classe base</h2>
+                    <p>È ovviamente essenziale che il sotto-oggetto della classe base sia inizializzato correttamente, e c'è solo un modo affiché questo venga garantito: svolgere l'inizializzazione nel costruttore, invocando il costruttore della classe base, che ha la conoscenza e i privilegi appropriati per inizializzare la classe base.</p>
+                    <p>Java inserisce automaticamente chiamate al costruttore della classe base nel costruttore della classe derivata.</p>
+                </section>
+
+                <section>
+                    <h2>Inizializzare la classe base</h2>
+                     <pre><code class="hljs" data-trim contenteditable>
+class Art {
+
+    Art() {
+        System.out.println("Art constructor");
+    }
+}
+
+class Drawing extends Art {
+
+    Drawing() {
+        System.out.println("Drawing constructor");
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Inizializzare la classe base</h2>
+                     <pre><code class="hljs" data-trim contenteditable>
+public class Cartoon extends Drawing {
+
+    public Cartoon() {
+        System.out.println("Cartoon constructor");
+    }
+
+    public static void main(String[] args) {
+        Cartoon x = new Cartoon();
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Inizializzare la classe base</h2>
+                    <p>Eseguendo il programma, si può notare che la classe base è inizializzata prima che il costruttore della classe derivata possa accedervi. Anche se non si crea un costruttore di <strong>Cartoon</strong>, il compilatore inserirà un costruttore di default che invoca il costruttore della classe base.</p>
+                </section>
+
+                <section>
+                    <h2>Esercizi</h2>
+                    <ul>
+                        <li>Dimostrare l'affermazione precedente.</li>
+                        <li>Creare due classi, <strong>A</strong> e <strong>B</strong> con costruttori di default che stampano il nome della classe. Ereditare un nuova classe <strong>C</strong> da <strong>A</strong> e creare un membro di classe <strong>B</strong> dentro a <strong>C</strong>. Creare quindi un oggetto di classe <strong>C</strong> e osservare il risultato.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Costruttore con argomenti</h2>
+                    <p>È facile per il compilatore invocare i costruttori di default poiché non hanno argomenti e non ci sono dubbi su quali argomenti passare.</p>
+                    <p>Se la classe non ha il costruttore di default o se si vuole chiamare il costruttore di una classe base con argomenti, occorre chiamare esplicitamente il costruttore con la parola chiave <strong>super</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>Costruttore con argomenti</h2>
+                     <pre><code class="hljs" data-trim contenteditable>
+class Game {
+
+    Game(int i) {
+        system.out.println("Game constructor");
+    }
+}
+
+class BoardGame extends Game {
+
+    BoardGame(int i) {
+        super(i);
+        System.out.println("BoardGame constructor");
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Costruttore con argomenti</h2>
+                     <pre><code class="hljs" data-trim contenteditable>
+public class Chess extends BoardGame {
+
+    Chess() {
+        super(11);
+        System.out.println("Chess constructor");
+    }
+
+    public static void main(String[] args) {
+        Chess x = new Chess();
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Costruttore con argomenti</h2>
+                    <p>Se non si chiamasse il costruttore della classe base in <strong>BoardGame()</strong>, il costruttore avviserebbe che non riesce a trovare un costruttore della forma <strong>Game()</strong>. Inoltre, il costruttore della classe base deve essere la prima istruzione nel costruttore della classe derivata.</p>
+                </section>
+
+                <section>
+                    <h2>Esercizi</h2>
+                    <ul>
+                        <li>Modificare l'esercizio precedente in modo che <strong>A</strong> e <strong>B</strong> abbiano costruttori con argomenti invece che costruttori di default. Scrivere un costruttori per <strong>C</strong> che inizializzi tutti i membri di <strong>C</strong>.</li>
+                        <li>Creare una classe base con solo un costruttore non di default e una classe derivata con un costruttore di default e un costruttore non di default. Nei costruttori della classe derivata, chiamare il costruttore della classe base.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Scegliere tra composizione ed ereditarietà</h2>
+                    <p>Sia la composizione sia l'ereditarietà permettono di posizionare sotto-oggetti dentro una nuova classe (per la composizione è esplicito, per l'ereditarietà e implicito).</p>
+                    <p>Quando è meglio scegliere l'uno piuttosto che l'altro?</p>
+                </section>
+
+                <section>
+                    <h2>Scegliere tra composizione ed ereditarietà</h2>
+                    <p>La composizione è generalmente utilizzata quando si desiderano le funzionalità di una classe esistente all'interno di una nuova classe, ma non nella sua interfaccia.</p>
+                    <p>Cioè, si incorpora un oggetto per poter aggiungere funzionalità alla nuova classe, ma l'utilizzatore della nuova classe vedrà l'interfaccia effettiva della classe piuttosto che l'interfaccia dell'oggetto incorporato.</p>
+                    <p>A causa di questo, spesso si incorporano oggetti <strong>private</strong> di classi esistenti all'interno di una nuova classe.</p>
+                </section>
+
+                <section>
+                    <h2>Scegliere tra composizione ed ereditarietà</h2>
+                     <pre><code class="hljs" data-trim contenteditable>
+class Engine {
+
+    public void start() {
+    }
+
+    public void rev() {
+    }
+
+    public void stop() {
+    }
+}
+
+class Wheel {
+
+    public void inflate(int psi) {
+    }
+}
+
+class Window {
+    public void rollup() {
+    }
+
+    public void rolldown() {
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Scegliere tra composizione ed ereditarietà</h2>
+                    <p>Da notare che i membri di questa classe sono <strong>public</strong> ma in generale dovrebbero essere <strong>private</strong>.</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class Car {
+
+    public Engine engine = new Engine();
+    public Wheel[] wheel = new Wheel[4];
+    public Door left = new Door(), right = new Door();
+    
+    public Car() {
+        for(int i = 0; i < 4; i++) {
+            wheel[i] = new Wheel();
+        }
+    }
+    
+    public static void main(String[] args) {
+        Car car = new Car();
+        car.left.window.rollup();
+        car.wheel[0].inflate(72);
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Scegliere tra composizione ed ereditarietà</h2>
+                    <p>Quando si applica l'ereditarietà, si prende una classe esistente e si costruisce una versione speciale di questa. In generale, questo significa che si sta prendendo una classe generica e la si sta specializzando per un bisogno particolare.</p>
+                    <p>Ha senso infatti comporre una macchina utilizzando un oggetto di tipo veicolo: una macchina non contiene un veicolo; è un veicolo. La relazione <em>è</em> (in inglese <em>is-a</em>) è espressa con l'ereditarietà e la relazione <em>ha</em> (in inglese <em>has-a</em>) è espressa con la composizione.</p>
+                </section>
+
+                <section>
+                    <h2>Scegliere tra composizione ed ereditarietà</h2>
+                    <img height="280" data-src="./images/reuse/vs.jpg" alt="vs">
+                </section>
+
+                <section>
+                    <h2>Riferimenti</h2>
+                    <dl>
+                        <dt>Documentazione Java</dt>
+                        <dd><a href="http://docs.oracle.com/javase/">http://docs.oracle.com/javase/</a></dd>
+
+                        <dt>Eckel</dt>
+                        <dd><a href="http://www.mindview.net/Books/">http://www.mindview.net/Books/</a></dd>
+                        <dd>Thinking in Java</dd>
+                        <dd>Thinking in Patterns (with Java)</dd>
+                    </dl>
+                </section>
+
+                <section style="text-align: left;">
+                    <h1>Domande?</h1>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+                // Optional reveal.js plugins
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>

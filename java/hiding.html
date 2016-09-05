@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Incapsulamento - Programmazione orientata agli oggetti in Java</title>
+
+        <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+        <meta name="author" content="Hakim El Hattab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+        <!-- Code syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Incapsulamento</h1>
+                    <h3>Programmazione orientata agli oggetti in Java</h3>
+                    <p><small>Giacomo Brambilla</small></p>
+                    <p><small><a href="http://www.dii.unipr.it">Dipartimento di Ingegneria dell'Informazione</a> - <a href="http://www.unipr.it">Università degli Studi di Parma</a></small></p>
+                    <p><small><a href="https://brambilla.github.io">https://brambilla.github.io</a></small></p>
+                </section>
+
+                <section>
+                    <h2>Incapsulamento</h2>
+                    <p class="fragment">Quando si realizza un programma, parti di codice sono spesso riscritte più e più volte prima di ottenere una versione che sia leggibile, comprensibile e quindi facile da manutenere.</p>
+                    <p class="fragment">D'altra parte, chi utilizza una libreria software si aspetta che alcune parti del codice rimangano le stesse e non siano modificate.</p>
+                    <p class="fragment">Un aspetto importante della programmazione orientata agli oggetti è "separare le cose che cambiano da quelle che devono rimanere uguali".</p>
+                </section>
+
+                <section>
+                    <h2>Incapsulamento</h2>
+                    <p>Questo aspetto è importante perché da una parte gli utilizzatori delle librerie software si affidano alle parti di codice che utilizzano (confidano nel fatto che non sia necessario riscrivere il programma, quando viene rilasciata una nuova versione della libreria), dall'altra gli sviluppatori della libreria devono avere la libertà di apportare modifiche e aggiornamenti al codice.</p>
+                </section>
+
+                <section>
+                    <h2>Incapsulamento</h2>
+                    <p>Per ottenere ciò è necessario che gli sviluppatori delle librerie software definiscano quali parti sono accessibili agli utilizzatori (e quindi non vengono modificate) e quali parti non sono invece disponibili.</p>
+                    <p>Java fornisce <em>modificatori di accesso</em> che permettono agli sviluppatori di definire cosa è disponibile agli utilizzatori e cosa no.</p>
+                    <p>I livelli di controllo di accesso in ordine crescente sono <strong>public</strong>, <strong>protected</strong>, accesso a livello di package (nessuna parola chiave) e <strong>private</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>Incapsulamento</h2>
+                    <p>Utilizzando i modificatori di accesso è possibile definire l'<em>incapsulamento</em>, cioè la tecnica di nascondere il funzionamento interno - deciso in fase di progetto - di una parte di un programma, in modo da proteggere le altre parti del programma dai cambiamenti che si produrrebbero in esse nel caso che questo funzionamento fosse difettoso, oppure si decidesse di implementarlo in modo diverso.</p>
+                </section>
+
+                <section>
+                    <h2>Modificatori di accesso in Java</h2>
+                    <p>I modificatori di accesso in Java sono <strong>public</strong>, <strong>protected</strong> e <strong>private</strong>.</p>
+                    <p>Possono essere utilizzati all'inizio di ogni definizione di qualsiasi campo o metodo di una classe per definirne il controllo di accesso.</p>
+                    <p>Nel caso non sia indicato alcun modificatore di accesso, significa "accesso a livello di package".</p>
+                </section>
+
+                <section>
+                    <h2>Accesso a livello di package</h2>
+                    <p>L'accesso a livello di package è il controllo di accesso di default in Java in quanto non utilizza nessuna particolare parola chiave.</p>
+                    <p>Significa che tutte le classi definite nel package corrente hanno accesso a tutti i membri, ma per tutte le altre classi definite esternamente a questo package i membri appaiono <strong>private</strong>.</p>
+                    <p>L'accesso a livello di package consente di raggruppare le classi in relazione tra loro in un package, in modo tale che possano interagire facilmente.</p>
+                </section>
+
+                <section>
+                    <h2>public</h2>
+                    <p>Utilizzando la parola chiave <strong>public</strong>, si intende che il membro definito immediatamente dopo è disponibile e accessibile a tutti.</p>
+                </section>
+
+                <section>
+                    <h2>public</h2>
+                    <p>Supponiamo di definire un package <strong>dessert</strong> che contiene la seguente classe:</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+// Creazione di una libreria.
+package dessert;
+
+public class Cookie {
+
+    public Cookie() {
+        System.out.println("Costruttore di Cookie");
+    }
+
+    void bite() {
+        System.out.println("morso");
+    }
+}
+                    </code></pre>
+                    <p>La classe deve essere definita in una cartella chiamata <strong>dessert</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>public</h2>
+                    <p>Creiamo ora un programma che utilizzi la classe <strong>Cookie</strong> precedentemente definita:</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+// Utilizzo della libreria.
+import dessert.*;
+
+public class Dinner {
+
+    public static void main(String[] args) {
+        Cookie x = new Cookie();
+        //! x.bite(); // Non è possibile accedere al metodo bite()
+    }
+}
+
+/* Output:
+Costruttore di Cookie
+*/
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>public</h2>
+                    <p>È possibile creare un oggetto di tipo <strong>Cookie</strong> poiché il suo costruttore è <strong>public</strong> ed anche la classe è <strong>public</strong>.</p>
+                    <p>Il metodo <strong>bite()</strong> è comunque inaccessibile all'interno della classe <strong>Dinner</strong> poiché <strong>bite()</strong> è accessibile solamente all'interno del package <strong>dessert</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>private</h2>
+                    <p>La parola chiave <strong>private</strong> indica che nessuno ha accesso al membro eccetto la sola classe che lo contiene.</p>
+                    <p>Nemmeno le altre classi definite nello stesso package possono accedere ai membri <strong>private</strong>.</p>
+                    <p>L'utilizzo del modificatore <strong>private</strong> permette di modificare liberamente i membri, senza preoccupazioni sul fatto che questi siano utilizzati da altre classi.</p>
+                </section>
+
+                <section>
+                    <h2>private</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+// Dimostrazione parola chiave "private".
+class Sundae {
+
+    private Sundae() {
+    }
+
+    static Sundae makeASundae() {
+        return new Sundae();
+    }
+}
+
+public class IceCream {
+
+    public static void main(String[] args) {
+        //! Sundae x = new Sundae();
+        Sundae x = Sundae.makeASundae();
+    }
+}                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>private</h2>
+                    <p>Nell'esempio precedente il costruttore è <strong>private</strong> e questo previene la creazione diretta dell'oggetto da parte di altri.</p>
+                    <p>Non è infatti possibile ottenere un oggetto di tipo <strong>Sundae</strong> tramite il costruttore, ma solamente utilizzando il metodo <strong>makeASundae()</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>private</h2>
+                    <p>Qualsiasi metodo che serve solamente a supporto di altri metodi all'interno della classe deve essere dichiarato <strong>private</strong> affinché non sia accidentalmente invocato da altre parti nel package.</p>
+                    <p>Analogamente, tutti i campi devono essere <strong>private</strong> in modo da nascondere l'implementazione sottostante.</p>
+                </section>
+
+                <section>
+                    <h2>protected</h2>
+                    <p>Per comprendere il modificatore di accesso <strong>protected</strong> è necessario conoscere il concetto di <em>ereditarietà</em> che vedremo in seguito.</p>
+                    <p>Quando si crea una classe che eredità da un'altra, si ha accesso solamente ai membri dichiarati <strong>public</strong> nel package originale.</p>
+                    <p>Con il modificatore <strong>protected</strong> si consente l'accesso alle classi che ereditano e a quelle dello stesso package ma non a tutte le altre.</p>
+                </section>
+
+                <section>
+                    <h2>Interfaccia e implementazione</h2>
+                    <p>I controlli di accesso permettono di stabilire quali parti possono e non possono essere utilizzate da altri sviluppatori.</p>
+                    <p>È possibile sviluppare i meccanismi interni, senza preoccuparsi del fatto che altri programmatori possano accidentalmente utilizzare componenti interni come parte dell'interfaccia</p>
+                    <p>Questo porta anche alla separazione "automatica" tra interfaccia e implementazione: l'interfaccia è rappresentata da ciò che è <strong>public</strong>, l'implementazione da ciò che non lo è (accesso a livello di package, <strong>protected</strong> o <strong>private</strong>).</p>
+                </section>
+
+                <section>
+                    <h2>Riferimenti</h2>
+                    <dl>
+                        <dt>Documentazione Java</dt>
+                        <dd><a href="http://docs.oracle.com/javase/">http://docs.oracle.com/javase/</a></dd>
+
+                        <dt>Eckel</dt>
+                        <dd><a href="http://www.mindview.net/Books/">http://www.mindview.net/Books/</a></dd>
+                        <dd>Thinking in Java</dd>
+                        <dd>Thinking in Patterns (with Java)</dd>
+                    </dl>
+                </section>
+
+                <section style="text-align: left;">
+                    <h1>Domande?</h1>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+                // Optional reveal.js plugins
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>

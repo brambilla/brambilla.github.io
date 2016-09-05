@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Flusso di esecuzione - Programmazione orientata agli oggetti in Java</title>
+
+        <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+        <meta name="author" content="Hakim El Hattab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+        <!-- Code syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Flusso di esecuzione</h1>
+                    <h3>Programmazione orientata agli oggetti in Java</h3>
+                    <p><small>Giacomo Brambilla</small></p>
+                    <p><small><a href="http://www.dii.unipr.it">Dipartimento di Ingegneria dell'Informazione</a> - <a href="http://www.unipr.it">Università degli Studi di Parma</a></small></p>
+                    <p><small><a href="https://brambilla.github.io">https://brambilla.github.io</a></small></p>
+                </section>
+
+                <section>
+                    <h2>Flusso di esecuzione</h2>
+                    <p>Java eredita i controlli di esecuzione dal C:</p>
+                    <p class="fragment"><strong>if-else</strong></p>
+                    <p class="fragment"><strong>while</strong></p>
+                    <p class="fragment"><strong>do-while</strong></p>
+                    <p class="fragment"><strong>for</strong></p>
+                    <p class="fragment"><strong>return</strong></p>
+                    <p class="fragment"><strong>break</strong></p>
+                    <p class="fragment"><strong>switch</strong></p>
+                </section>
+
+                <section>
+                    <h2>true e false</h2>
+                    <p>Tutti i controlli condizionali utilizzano il risultato <strong>true</strong> o <strong>false</strong> di un'espressione per determinare il percorso di esecuzione.</p>
+                    <p>Un esempio di espressione condizionale è <strong>a == b</strong> che utilizza l'operatore <strong>==</strong> per valutare se il valore di <strong>a</strong> è uguale a quello di <strong>b</strong>.
+                </section>
+
+                <section>
+                    <h2>if-else</h2>
+                    <p>Il costrutto <strong>if-else</strong> permette di controllare il flusso del programma a seconda che il valore di un'espressione booleana sia <em>vera</em> o <em>falsa</em>.</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class IfElse {
+
+    static int result = 0;
+
+    static void test(int testval, int target) {
+        if(testval > target) {
+            result = +1;
+        } else if(testval < target) {
+            result = -1;
+        } else {
+            result = 0;
+        }
+    }
+
+    public static void main(String[] args) {
+        test(10, 5);
+        System.out.println(result);
+
+        test(5, 10);
+        System.out.println(result);
+
+        test(5, 5);
+        System.out.println(result);
+    }
+}
+
+/* Output:
+1
+-1
+0
+*/
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Iterazione</h2>
+                    <p>Le iterazioni si realizzano con <strong>while</strong>, <strong>do-while</strong> e <strong>for</strong>.</p>
+                    <p>Questi costrutti permettono di ripetere l'esecuzione di istruzioni fino a quando la valutazione di un'espressione booleana non restituisce un valore <em>falso</em>.</p>
+                </section>
+
+                <section>
+                    <h2>while</h2>
+                    <p>Il costrutto <strong>while</strong> valuta l'espressione booleana una volta all'inizio dell'iterazione e poi di nuovo ad ogni iterazione successiva.</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class WhileTest {
+
+    static int result = 0;
+
+    public static void main(String[] args) {
+        System.out.println("Prima del while");
+
+        while(result < 2) {
+            System.out.println("Dentro al while");
+            result = result + 1;
+        }
+
+        System.out.println("Dopo il while");
+    }
+}
+
+/* Output:
+Prima del while
+Dentro al while
+Dentro al while
+Dopo il while
+*/
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>do-while</h2>
+                    <p>La sola differenza tra <strong>while</strong> e <strong>do-while</strong> è che nel caso di <strong>do-while</strong> l'iterazione viene eseguita almeno una volta, anche se l'espressione booleana ha valore <strong>false</strong>.</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class WhileTest {
+
+    static int result = 2;
+
+    public static void main(String[] args) {
+        System.out.println("Prima del while");
+
+        do {
+            System.out.println("Dentro al while");
+            result = result + 1;
+        } while(result < 2);
+
+        System.out.println("Dopo il while");
+    }
+}
+
+/* Output:
+Prima del while
+Dentro al while
+Dopo il while
+*/
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>for</h2>
+                    <p>Il costrutto <strong>for</strong> esegue una inizializzazione alla prima iterazione, quindi esegue la verifica sulla condizione e al termine di ogni iterazione effettua un aggiornamento.</p>
+                    <p>L'espressione booleana è valutata prima di ogni iterazione e nel caso abbia valore <strong>false</strong> l'iterazione si interrompe.</p>
+                    <p>Le iterazioni con <strong>for</strong> sono tipicamente utilizzate per operazioni di "conteggio".</p>
+                </section>
+
+                <section>
+                    <h2>for</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class ListCharacters {
+
+    public static void main(String[] args) {
+        for(char c = 0; c < 128; c++) {
+            if(Character.isLowerCase(c)) {
+                System.out.println("valore: " + (int)c + " carattere: " + c);
+            }
+        }
+    }
+}
+
+/* Output:
+valore: 97 carattere: a
+valore: 98 carattere: b
+valore: 99 carattere: c
+...
+*/
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>for</h2>
+                    <p>Da notare che la variabile <strong>c</strong> è definita all'interno dell'espressione di controllo del <strong>for</strong>, quindi dove è effettivamente utilizzata e non all'inizio del metodo <strong>main()</strong>.</p>
+                    <p>Il programma utilizza la classe <strong>java.lang.Character</strong> che fornisce alcuni utilità legate al tipo primitivo <strong>char</strong>.</p>
+                    <p>In questo caso, il metodo <strong>static isLowerCase()</strong> è utilizzato per verificare se il carattere in questione sia o meno una lettera minuscola.</p>
+                </section>
+
+                <section>
+                    <h2>Esercizi</h2>
+                    <ul>
+                        <li>Scrivere un programma che stampi i numeri interi da 1 a 100.</li>
+                        <li>Scrivere un programma che utilizzi due <strong>for</strong> innestati per stampare una griglia di caratteri <strong>'0'</strong> e <strong>'1'</strong> alternati.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>L'operatore virgola</h2>
+                    <p>Utilizzando l'operatore virgola è possibile definire più variabili (dello stesso tipo) in un costrutto <strong>for</strong>:</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class CommaOperator {
+    public static void main(String[] args) {
+        for(int i = 1, j = i + 10; i < 5; i++, j = i * 2) {
+            System.out.println("i = " + i + " j = " + j);
+        }
+    }
+}
+
+/* Output:
+i = 1 j = 11
+i = 2 j = 4
+i = 3 j = 6
+i = 4 j = 8
+*/
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>foreach</h2>
+                    <p>In Java esiste una versione particolare di <strong>for</strong>, da utilizzare con array e <em>container</em> in generale che prende il nome di <em>foreach:</em></p>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class ForEachInt {
+    public static void main(String[] args) {
+        int numbers[] = new int[10];
+        for(int i = 0; i < 10; i++) {
+            numbers[i] = i+1;
+        }
+
+        for(int x : numbers) {
+            System.out.println(x);
+        }
+    }
+}
+
+/* Output:
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+*/
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>return</h2>
+                    <p>La parola chiave <strong>return</strong> ha due scopi: specifica quale valore un metodo ritornerà (nel caso non abbia un valore di ritorno <strong>void</strong>) e causa l'uscita dal metodo corrente.</p>
+                </section>
+
+                <section>
+                    <h2>break e continue</h2>
+                    <p>È possibile controllare il flusso di esecuzione di un'iterazione utilizzando <strong>break</strong> e <strong>continue</strong>.</p>
+                    <p><strong>break</strong> interrompe immediatamente l'iterazione, senza eseguire il resto delle operazioni; <strong>continue</strong> ferma l'esecuzione dell'iterazione corrente e prosegue all'iterazione successiva.</p>
+                </section>
+
+                <section>
+                    <h2>break e continue</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class BreakAndContinue {
+
+    public static void main(String[] args) {
+        for(int i = 0; i < 100; i++) {
+            if(i == 99) break; // Esce dall'iterazione
+            if(i % 9 != 0) continue; // Prosegue all'iterazione successiva
+            System.out.print(i + " ");
+        }
+    }
+}
+
+/* Output:
+0 9 18 27 36 45 54 63 72 81 90
+*/
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>switch</h2>
+                    <p>Il costrutto <strong>switch</strong> seleziona il flusso di codice a seconda del valore di un'espressione (che può essere <strong>int</strong>, <strong>char</strong> oppure <strong>enum</strong>):</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class VowelsAndConsonants {
+
+    public static void main(String[] args) {
+        for(char c = 'A'; c <= 'Z'; c++) {
+            System.out.print(c + ": ");
+            switch(c) {
+                case 'A':
+                case 'E':
+                case 'I':
+                case 'O':
+                case 'U':
+                    System.out.println("vocale");
+                    break;
+                case 'Y':
+                case 'W':
+                    System.out.println("quasi-vocale (in inglese)");
+                    break;
+                default:
+                    System.out.println("consonante");
+            }
+        }
+    }
+}
+
+/* Output:
+A: vocale
+B: consonante
+C: consonante
+...
+W: quasi-vocale (in inglese)
+...
+*/
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>switch</h2>
+                    <p>Nell'esempio precedente, <strong>switch</strong> confronta il valore di <strong>c</strong> con uno dei caratteri indicati; nel caso in cui nessuno dei caratteri indicati corrisponda, viene eseguita le operazioni <strong>default</strong>.</p>
+                    <p>Da notare che ogni <strong>case</strong> termina con un <strong>break</strong> che fa sì che l'esecuzione esca dallo <strong>switch</strong>; nel caso non sia presente il <strong>break</strong> l'esecuzione prosegue.</p>
+                    <p>Per il <strong>default</strong> non è necessario <strong>break</strong> essendo al termine dello <strong>switch</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>Esercizio</h2>
+                    <p>La <em>successione di Fibonacci</em> è una sequenza di numeri interi (1, 1, 2, 3, 5, 8, 13, 21, …) dove ogni numero a partire dal terzo è la somma dei due precedenti.</p>
+                    <ul>
+                        <li>Creare un metodo che accetta un parametro intero come argomento e mostra tanti numeri di Fibonacci quanti sono indicati nel parametro. Ad esempio, eseguendo <strong>java Fibonacci 5</strong> (dove <strong>Fibonacci</strong> è il nome della classe), l'output sarà 1, 1, 2, 3, 5.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Riferimenti</h2>
+                    <dl>
+                        <dt>Documentazione Java</dt>
+                        <dd><a href="http://docs.oracle.com/javase/">http://docs.oracle.com/javase/</a></dd>
+
+                        <dt>Eckel</dt>
+                        <dd><a href="http://www.mindview.net/Books/">http://www.mindview.net/Books/</a></dd>
+                        <dd>Thinking in Java</dd>
+                        <dd>Thinking in Patterns (with Java)</dd>
+                    </dl>
+                </section>
+
+                <section style="text-align: left;">
+                    <h1>Domande?</h1>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+                // Optional reveal.js plugins
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>

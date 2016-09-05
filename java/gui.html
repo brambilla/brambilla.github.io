@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Interfacce grafiche - Programmazione orientata agli oggetti in Java</title>
+
+        <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+        <meta name="author" content="Hakim El Hattab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+        <!-- Code syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Interfacce grafiche</h1>
+                    <h3>Programmazione orientata agli oggetti in Java</h3>
+                    <p><small>Giacomo Brambilla</small></p>
+                    <p><small><a href="http://www.dii.unipr.it">Dipartimento di Ingegneria dell'Informazione</a> - <a href="http://www.unipr.it">Università degli Studi di Parma</a></small></p>
+                    <p><small><a href="https://brambilla.github.io">https://brambilla.github.io</a></small></p>
+                </section>
+
+                <section>
+                    <h2>Definizione (Wikipedia)</h2>
+                    <img height="280" data-src="./images/gui/X-Window-System.png" alt="X-Window-System">
+                    <p>L'interfaccia grafica utente, nota anche come GUI (dall'inglese Graphical User Interface), comunemente abbreviata in interfaccia grafica, è un tipo di interfaccia utente che consente all'utente di interagire con la macchina controllando oggetti grafici convenzionali.</p>
+                </section>
+
+                <section>
+                    <h2>L'importanza della GUI</h2>
+                    <p class="fragment">Gli utenti spesso giudicano un sistema dalla sua interfaccia grafica piuttosto che dalle sue funzionalità</p>
+                    <p class="fragment">Una cattiva progettazione dell'interfaccia grafica può portare l'utente a commettere errori, anche gravi</p>
+                    <p class="fragment">Molti sistemi software non sono utilizzati a causa della loro interfaccia grafica</p>
+                    <p class="fragment"><img height="200" data-src="./images/gui/Metro.jpg" alt="Metro"></p>
+                </section>
+
+                <section>
+                    <h2>Progettazione di una GUI</h2>
+                    <p>Progettare una GUI è un'attività molto complessa</p>
+                    <dl>
+                        <dt>Il progettista deve:</dt>
+                        <dd>conoscere la tipologia degli utenti e i loro bisogni;</dd>
+                        <dd>prevenire gli errori degli utenti, quando possibile;</dd>
+                        <dd>snellire il più possibile l'accesso ai dati e ai comandi.</dd>
+
+                        <dt>Una GUI:</dt>
+                        <dd>deve essere auto-consistente, cioè avere un modo uniforme per presentare i dati e per accettare i comandi;</dd>
+                        <dd>deve tenere presente le convenzioni del sistema in cui l'applicazione verrà eseguita.</dd>
+                    </dl>
+                </section>
+
+                <section>
+                    <h2>Swing</h2>
+                    <dl>
+                        <dt>Swing è un framework per Java orientato allo sviluppo di interfacce grafiche.</dt>
+                        <dd>Parte delle classi del framework Swing sono implementazioni di widget come caselle di testo, pulsanti, pannelli e tabelle.</dd>
+
+                        <dt>La libreria Swing viene utilizzata come libreria ufficiale per la realizzazione di interfacce grafiche in Java. È un'estensione del precedente Abstract Window Toolkit.</dt>
+                        <dd>La differenza principale tra i due è che i componenti Swing sono scritti completamente in codice Java.</dd>
+                    </dl>
+                </section>
+
+                <section>
+                    <h2>La mia prima interfaccia grafica</h2>
+                    <p>La maggior parte delle applicazioni saranno costruite all'interno di un <strong>JFrame</strong>, che crea una finestra indipendentemente dal sistema operativo in uso. Il titolo della finestra può essere impostato utilizzando il costruttore di <strong>JFrame</strong>, in questo modo:</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+import javax.swing.*;
+
+public class HelloSwing {
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Hello Swing");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 100);
+        frame.setVisible(true);
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>La mia prima interfaccia grafica</h2>
+                    <p class="fragment"><strong>setDefaultCloseOperation()</strong> indica al <strong>JFrame</strong> cosa fare quando l'utente chiude la finestra. La costante <strong>EXIT_ON_CLOSE</strong> dice di chiudere il programma. Senza questa chiamata, il comportamento di default è di non fare nulla, quindi l'applicazione non si chiuderebbe.</p>
+                    <p class="fragment"><strong>setSize()</strong> imposta la dimensione della finestra in pixel.</p>
+                    <p class="fragment">Attenzione all'ultima riga! Senza <strong>frame.setVisible(true)</strong> non si vedrebbe nulla sullo schermo!</p>
+                </section>
+
+                <section>
+                    <h2>Un po' di dinamismo</h2>
+                    <p>È possibile rendere le cose un po' più interessanti aggiungendo una <strong>JLabel</strong> al <strong>JFrame</strong>. Dopo un secondo, il testo della <strong>JLabel</strong> cambia!</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+import javax.swing.*;
+import java.util.concurrent.*;
+
+public class HelloLabel {
+    public static void main(String[] args) throws Exception {
+        JFrame frame = new JFrame("Hello Swing");
+        JLabel label = new JLabel("A Label");
+        frame.add(label);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 100);
+        frame.setVisible(true);
+        TimeUnit.SECONDS.sleep(1);
+        label.setText("Hey! This is Different!");
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Un po' di dinamismo (2)</h2>
+                    <p>In realtà è bene che la <strong>main()</strong> thread non scriva direttamente sui componenti della GUI. Swing ha una sua thread dedicata alla gestione degli eventi che può essere utilizzata tramite <strong>SwingUtilities.invokeLater()</strong></p>
+                </section>
+
+                <section>
+                    <h2>Un po' di dinamismo (2)</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+import javax.swing.*;
+import java.util.concurrent.*;
+
+public class SubmitLabelManipulationTask {
+    public static void main(String[] args) throws Exception {
+        JFrame frame = new JFrame("Hello Swing");
+        final JLabel label = new JLabel("A Label");
+        frame.add(label);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 100);
+        frame.setVisible(true);
+        
+        TimeUnit.SECONDS.sleep(1);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                label.setText("Hey! This is Different!");
+            }
+        });
+    }
+}
+                    </code></pre>
+                <p>In questo caso non si manipola la <strong>JLabel</strong> direttamente, ma si invia un <strong>Runnable</strong> alla thread di gestione degli eventi che si occuperà di eseguirlo.</p>
+                </section>
+
+                <section>
+                    <h2>Un po' di dinamismo (3)</h2>
+                    <p>Tutti i problemi di concorrenza sono risolti solamente se tutte le manipolazioni a componenti della GUI sono gestite tramite <strong>SwingUtilities.invokeLater()</strong>:</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class SubmitSwingProgram extends JFrame {
+    JLabel label;
+    public SubmitSwingProgram() {
+        super("Hello Swing");
+        label = new JLabel("A Label");
+        add(label);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(300, 100);
+        setVisible(true);
+    }
+
+    static SubmitSwingProgram ssp;
+    public static void main(String[] args) throws Exception {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() { ssp = new SubmitSwingProgram(); }
+        });
+        TimeUnit.SECONDS.sleep(1);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                ssp.label.setText("Hey! This is Different!");
+            }
+        });
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Esercizi</h2>
+                    <ul>
+                        <li>Provare che l'applicazione non si chiude senza la chiamata a <strong>setDefaultCloseOperation()</strong>.</li>
+                        <li>Modificare il programma in modo che aggiunga dinamicamente un numero casuale di <strong>JLabel</strong>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Un semplice framework grafico</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+import javax.swing.*;
+
+public class SwingFramework {
+    public static void run(final JFrame f, final int width, final int height) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                f.setTitle(f.getClass().getSimpleName());
+                f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                f.setSize(width, height);
+                f.setVisible(true);
+            }
+        });
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Un semplice framework grafico</h2>
+                    <p>Un framework è un'architettura logica di supporto su cui un software può essere progettato e realizzato, spesso facilitandone lo sviluppo da parte del programmatore. Alla base di un framework c'è sempre una serie di librerie di codice. L'utilizzo di un framework impone al programmatore una precisa metodologia di sviluppo del software. (Wikipedia)</p>
+
+                    <p><strong>SwingFramework</strong> combina le idee precedenti e riduce il codice ridondante per facilitare la creazione di semplici applicazioni Swing che utilizzino <strong>JFrame</strong>. Il metodo <strong>statico run()</strong> imposta il nome di classe del <strong>JFrame</strong> come titolo della finestra.</p>
+                </section>
+
+                <section>
+                    <h2>Esercizio</h2>
+                    <ul>
+                        <li>Modificare il programma <strong>SubmitSwingProgram</strong> in modo che utilizzi <strong>SwingFramework</strong>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Creazione di un pulsante</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+import javax.swing.*;
+import java.awt.*;
+
+public class ButtonApp extends JFrame {
+    private JButton b1 = new JButton("Button 1");
+    private JButton b2 = new JButton("Button 2");
+    
+    public ButtonApp() {
+        setLayout(new FlowLayout());
+        add(b1);
+        add(b2);
+    }
+
+    public static void main(String[] args) {
+        SwingFramework.run(new ButtonApp(), 200, 100);
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Creazione di un pulsante</h2>
+                    <p>La creazione di un pulsante è abbastanza semplice: basta chiamare il costruttore <strong>JButton</strong> con l'etichetta che si desidera sopra al pulsante. È possibile anche applicare immagini sopra ai pulsanti.</p>
+
+                    <p>Tipicamente all'interno della classe si crea un campo per ogni pulsante, in modo da mantenerne il riferimento per usi successivi.</p>
+                </section>
+
+                <section>
+                    <h2>Creazione di un pulsante</h2>
+                    <p>Nell'esempio mostrato, compare qualcosa di nuovo: prima di posizionare gli elementi nel <strong>JFrame</strong>, viene impostato un <em>layout manager</em> di tipo <strong>FlowLayout</strong>. Il layout manager permette di definire come i componenti sono posizionati all'interno dela finestra. Il comportamento normale del <strong>JFrame</strong> è l'utilizzo del <strong>BorderLayout</strong> che in questo caso fa sì che ogni componente si copra a vicenda (si scoprirà dopo perché). Invece, il <strong>FlowLayout</strong> fa sì che i componenti siano disposti scorrendo da sinistra a destra e dall'altro verso il basso.</p>
+                </section>
+
+                <section>
+                    <h2>Esercizio</h2>
+                    <ul>
+                        <li>Verificare che senza la chiamata a <strong>setLayout()</strong> in <strong>ButtonApp</strong>, nel programma compare un solo pulsante.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>La cattura degli eventi</h2>
+                    <p>Eseguendo il programma precedente, alla pressione del pulsante non accade nulla. Occorre infatti collegare gli eventi al codice che reagisce a questi eventi. Si parla dunque di <em>programmazione a eventi</em>.</p>
+
+                    <p>Swing permette di realizzare tutto questo in modo pulito, separando l'interfaccia (i componenti grafici) dall'implementazione (il codice che si vuole eseguire quando un evento accade).</p>
+                </section>
+
+                <section>
+                    <h2>La cattura degli eventi</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class EventApp extends JFrame {
+    private JButton b1 = new JButton("Button 1");
+    private JButton b2 = new JButton("Button 2");
+    private JTextField txt = new JTextField(10);
+    
+    private ActionListener bl = new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+           String name = ((JButton)e.getSource()).getText();
+           txt.setText(name);
+       }
+    };
+
+    public EventApp() {
+        b1.addActionListener(bl);
+        b2.addActionListener(bl);
+        setLayout(new FlowLayout());
+        add(b1);
+        add(b2);
+        add(txt);
+    }
+    
+    public static void main(String[] args) {
+        SwingFramework.run(new EventApp(), 200, 150); 
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>La cattura degli eventi</h2>
+                    <p>Nel caso del <strong>JButton</strong>, per manifestare interesse all'evento associato alla pressione del pulsante, si chiama il metodo <strong>addActionListener()</strong> di <strong>JButton</strong>. Questo metodo prevede un oggetto che implementa l'interfaccia <strong>ActionListener</strong> come argomento. In questo caso l'<strong>ActionListener</strong> è definito come classe interna anonima. Il metodo <strong>actionPerformed()</strong> sarà quindi chiamato ogni volta il pulsante verrà premuto.</p>
+                </section>
+
+                <section>
+                    <h2>La cattura degli eventi</h2>
+                    <p><strong>JTextField</strong> è  un componente Swing in cui l'utente (o, come in questo caso, il programma) può inserire del testo. Il modo più semplice per utilizzare un <strong>JTextField</strong> è quello di chiamarne il costruttore comunicandone la larghezza. Il metodo <strong>setText()</strong> permette quindi di modificarne il contenuto.</p>
+
+                    <p>L'argomento del metodo <strong>actionPerformed()</strong> è di tipo <strong>ActionEvent</strong>, che contiene le informazioni sull'evento su chi l'ha generato. Il metodo <strong>getSource()</strong> restituisce l'oggetto in cui è stato generato l'evento (in questo caso uno dei due oggetti <strong>JButton</strong>).</p>
+                </section>
+
+                <section>
+                    <h2>Esercizio</h2>
+                    <ul>
+                        <li>Creare un'applicazione utilizzando la classe <strong>SwingFramework</strong> che includa un campo di testo e tre pulsanti. Alla pressione di ogni pulsate, il campo di testo mostrerà testi differenti.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Eventi e listener</h2>
+                    <p>Tutti i componenti Swing includono metodi per aggiungere e rimuovere listener, del tipo <strong>addXXXListener()</strong> e <strong>removeXXXListener()</strong>. In tutti i casi "<strong>XXX</strong>" rappresenta anche l'argomento del metodo.</p>
+
+                    <p>Esistono diversi eventi base con i rispettivi listener associati come <strong>KeyEvent</strong> (per gli eventi da tastiera), <strong>MouseEvent</strong> (per gli eventi da mouse), <strong>WindowEvent</strong> (per gli eventi associati alla finestra), ecc.</p>
+                </section>
+
+                <section>
+                    <h2>Controllare il layout</h2>
+                    <p>In Swing la posizione dei componenti all'interno della finestra non è definita in modo assoluto ma è decisa da un <em>layout manager</em> che decide come disporre i componenti in base all'ordine con cui questi sono aggiunti utilizzando il metodo <strong>add()</strong>. La dimensione, la forma e la posizione dei componenti sarà molto diversa a seconda del layout manager.</p>
+                </section>
+
+                <section>
+                    <h2>Controllare il layout</h2>
+                    <p><strong>JApplet</strong>, <strong>JFrame</strong>, <strong>JWindow</strong>, <strong>JDialog</strong>, <strong>JPanel</strong> sono contenitori di primo livello, non possono essere contenuti in altri contenitori, ma possono contenere uno o più componenti. Essendo <strong>Container</strong>, sono dotati del metodo <strong>setLayout()</strong> che permette di scegliere il layout manager.</p>
+                </section>
+
+                <section>
+                    <h2>BorderLayout</h2>
+                    <p>A meno che questo non venga modificato, un <strong>JFrame</strong> utilizzerà <strong>BorderLayout</strong> di default. Senza altre istruzioni, tutto ciò che viene aggiunto tramite il metodo <strong>add()</strong> è posizionato al centro e allargato fino al bordo della finestra.</p>
+
+                    <p><strong>BorderLayout</strong> utilizza il concetto di regioni di bordo e area centrale. Quando si aggiunge qualcosa al <strong>BorderLayout</strong> è possibile utilizzare il metodo <strong>add()</strong> specificando un valore costante come primo argomento.</p>
+                </section>
+
+                <section>
+                    <h2>BorderLayout</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Valore costante</th>
+                                <th>Descrizione</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>BorderLayout.NORTH</td>
+                                <td>In alto</td>
+                            </tr>
+                            <tr>
+                                <td>BorderLayout.SOUTH</td>
+                                <td>In basso</td>
+                            </tr>
+                            <tr>
+                                <td>BorderLayout.EAST</td>
+                                <td>A destra</td>
+                            </tr>
+                            <tr>
+                                <td>BorderLayout.WEST</td>
+                                <td>A sinistra</td>
+                            </tr>
+                            <tr>
+                                <td>BorderLayout.CENTER</td>
+                                <td>Riempie l'area centrale fino agli altri componenti laterali</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section>
+                    <h2>BorderLayout</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+import javax.swing.*;
+import java.awt.*;
+
+public class BorderLayoutApp extends JFrame {
+    public BorderLayoutApp() {
+        add(BorderLayout.NORTH, new JButton("North"));
+        add(BorderLayout.SOUTH, new JButton("South"));
+        add(BorderLayout.EAST, new JButton("East"));
+        add(BorderLayout.WEST, new JButton("West"));
+        add(BorderLayout.CENTER, new JButton("Center"));
+    }
+
+    public static void main(String[] args) {
+        SwingFramework.run(new BorderLayoutApp(), 300, 250);
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>BorderLayout</h2>
+                    <p>Se non si specifica un'area in cui posizionare l'oggetto, il valore di default è <strong>BorderLayout.CENTER</strong>.</p>
+
+                    <p>Per ogni posizionamento a parte quello centrale, l'elemento da inserire è compresso per occupare la più piccola quantità possible di spazio in una dimensione, mentre dall'altra è allargato al massimo.</p>
+                </section>
+
+                <section>
+                    <h2>BorderLayout</h2>
+                    <img height="500" data-src="./images/gui/BorderLayoutApp.png" alt="BorderLayoutApp">
+                </section>
+
+                <section>
+                    <h2>FlowLayout</h2>
+                    <p>Questo layout semplicemente dispone i componenti scorrendo da sinistra a destra finché lo spazio è esaurito, quindi scende di una riga e continua a scorrere. Con <strong>FlowLayout</strong> i componenti assumono la loro dimensione naturale, che nel caso di un <strong>JButton</strong> corrisponde alla dimensione della stringa.</p>
+
+                    <p>Per ogni posizionamento a parte quello centrale, l'elemento da inserire è compresso per occupare la più piccola quantità possible di spazio in una dimensione, mentre dall'altra è allargato al massimo.</p>
+                </section>
+
+                <section>
+                    <h2>FlowLayout</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+import javax.swing.*;
+import java.awt.*;
+
+public class FlowLayoutApp extends JFrame {
+    public FlowLayoutApp() {
+        setLayout(new FlowLayout());
+        for(int i = 0; i < 20; i++)
+            add(new JButton("Button " + i));
+        } 
+
+    public static void main(String[] args) {
+        SwingFramework.run(new FlowLayoutApp(), 300, 300);
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>FlowLayout</h2>
+                    <img height="181" data-src="./images/gui/FlowLayoutApp.png" alt="FlowLayoutApp">
+                    <p>Tutti i componenti sono compattati alla loro dimensione minima.</p>
+                    <p>Ridimensionando la finestra, il layout manager ridisporrà i componenti di conseguenza.</p>
+                </section>
+
+                <section>
+                    <h2>GridLayout</h2>
+                    <p>Un <strong>GridLayout</strong> permette di costruire una tabella di componenti che vengono posizionati da sinistra a destra e dall'alto verso il basso, all'interno di una griglia. Nel costruttore si specifica il numero di righe e colonne.</p>
+                </section>
+
+                <section>
+                    <h2>GridLayout</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+import javax.swing.*;
+import java.awt.*;
+
+public class GridLayoutApp extends JFrame {
+    public GridLayoutApp() {
+        setLayout(new GridLayout(7,3));
+        for(int i = 0; i < 20; i++) {
+            add(new JButton("Button " + i));
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingFramework.run(new GridLayoutApp(), 300, 300);
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>GridLayout</h2>
+                    <img height="418" data-src="./images/gui/GridLayoutApp.png" alt="GridLayoutApp">
+                    <p>Poiché la griglia è composta da 21 spazi e sono stati aggiunti solamente 20 pulsanti, l'ultimo spazio rimane vuoto.</p>
+                </section>
+
+                <section>
+                    <h2>Posizionamento assoluto</h2>
+                    <dl>
+                        <dt>È anche possibile impostare la posizione assoluta dei componenti grafici:</dt>
+                        <dd>impostando a <strong>null</strong> il layout manager del <strong>Container</strong>: <strong>setLayout(null)</strong>;</dd>
+                        <dd>chiamando <strong>setBounds()</strong> oppure <strong>reshape()</strong> per ogni componente e passando un rettangolo di contorno in coordinate pixel. Può essere fatto nel costruttore oppure in <strong>paint()</strong>.</dd>
+                    </dl>
+                </section>
+
+                <section>
+                    <h2>Componenti Swing</h2>
+                    <p>Ora che si ha compreso il modello a eventi e la gestione dei layout, si è pronti a vedere i componenti principali offerti da Swing.</p>
+                </section>
+
+                <section>
+                    <h2>Controlli base</h2>
+                    <p>Componenti semplici utilizzati principalmente per ottenere un input dall'utente.</p>
+                    <img height="418" data-src="./images/gui/BasicControls.png" alt="BasicControls">
+                </section>
+
+                <section>
+                    <h2>Componenti interattivi per informazioni strutturate</h2>
+                    <p>Questi componenti mostrano informazioni altamente strutturate che possono essere modificate dall'utente.</p>
+                    <img height="370" data-src="./images/gui/InteractiveDisplaysOfHighlyFormattedInformation1.png" alt="InteractiveDisplaysOfHighlyFormattedInformation1">
+                </section>
+
+<section>
+                    <h2>Componenti interattivi per informazioni strutturate (2)</h2>
+                    <img height="370" data-src="./images/gui/InteractiveDisplaysOfHighlyFormattedInformation2.png" alt="InteractiveDisplaysOfHighlyFormattedInformation2">
+                </section>
+
+                <section>
+                    <h2>Componenti per informazioni non modificabili</h2>
+                    <p>Questi componenti servono per fornire informazioni all'utente.</p>
+                    <img height="197" data-src="./images/gui/UneditableInformationDisplays.png" alt="UneditableInformationDisplays">
+                </section>
+
+                <section>
+                    <h2>Contenitori di primo livello</h2>
+                    <p>Almeno uno di questi deve essere presente in ogni applicazione Swing.</p>
+                    <img height="183" data-src="./images/gui/Top-LevelContainers.png" alt="Top-LevelContainers">
+                </section>
+
+                <section>
+                    <h2>Contenitori generici</h2>
+                    <p>Sono contenitori generici utilizzati in molte applicazioni Swing.</p>
+                    <img height="418" data-src="./images/gui/General-PurposeContainers.png" alt="General-PurposeContainers">
+                </section>
+
+                <section>
+                    <h2>Contenitori specifici</h2>
+                    <p>Contenitori specifici per interfacce grafiche particolari.</p>
+                    <img height="418" data-src="./images/gui/Special-PurposeContainers.png" alt="Special-PurposeContainers">
+                </section>
+
+                <section>
+                    <h2>Non solo Swing…</h2>
+                    <p>Il paradigma di programmazione a eventi è ampiamente utilizzato nello sviluppo di interfacce grafiche.</p>
+                    <p>Swing è un esempio di libreria dedicata allo sviluppo di interfacce grafiche in Java che adotta questo modello di sviluppo, ma non è l'unico: anche in Android le interfacce grafiche si realizzano seguendo lo stesso principio.</p>
+                    <img height="218" data-src="./images/gui/Android.gif" alt="Android">
+                </section>
+
+                <section>
+                    <h2>Le interfacce grafiche in Android</h2>
+                    <p>Le interfacce grafiche in Android sono costruite utilizzando una gerarchia di oggetti <strong>View</strong> e <strong>ViewGroup</strong>. Gli oggetti <strong>View</strong> sono i tipici componenti grafici delle interfacce grafiche come pulsanti e campi di testo; gli oggetti <strong>ViewGroup</strong> sono invece contenitori invisibili che definiscono il modo in cui i componenti sono disposti.</p>
+                    <p>Android fornisce un vocabolario XML che corrisponde a sottoclassi di <strong>View</strong> e <strong>ViewGroup</strong> in modo da definire l'interfaccia grafica tramite XML.</p>
+                </section>
+
+                <section>
+                    <h2>Le interfacce grafiche in Android</h2>
+                    <img height="476" data-src="./images/gui/LinearLayout.png" alt="LinearLayout">
+                </section>
+
+
+                <section>
+                    <h2>Le interfacce grafiche in Android</h2>
+                    <p><strong>LinearLayout</strong> è una sottoclasse di <strong>ViewGroup</strong> che dispone i componenti grafici orizzontalmente o verticalmente, come specificato dall'attributo <em>android:orientation</em>. Ogni componente appare sullo schermo nell'ordine in cui appare nel file XML.</p>
+
+                    <p><em>android:layout_width</em> e <em>android:layout_height</em>, sono necessari per specificare le dimensioni di qualsiasi <strong>View</strong>. Il valore <em>"match_parent"</em> dichiara che la <strong>View</strong> dovrebbe avere le dimensioni della <strong>View</strong> genitore.</p>
+                </section>
+
+                <section>
+                    <h2>Le interfacce grafiche in Android</h2>
+                    <p>Per creare un campo di testo non modificabile dall'utente basta aggiungere un elemento <em>TextView</em> all'interno del <em>LinearLayout</em>. L'attributo <em>android:id</em> fornisce un identificativo unico per la <strong>View</strong> che può essere utilizzato per ottenere un riferimento all'oggetto nel codice dell'applicazione.</p>
+
+                    <p>Analogamente per creare un pulsante basta aggiungere un elemento <em>Button</em>.</p>
+                </section>
+
+                <section>
+                    <h2>Le interfacce grafiche in Android</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class MainActivity extends Activity {
+	
+	private Button button1;
+	private Button button2;
+	private TextView textview;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.layout_main);
+		
+		button1 = (Button) findViewById(R.id.button1);
+		button2 = (Button) findViewById(R.id.button2);
+		textview = (TextView) findViewById(R.id.textview);
+		
+		OnClickListener listener = new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				CharSequence name = ((Button) v).getText();
+				textview.setText(name);
+				
+			}
+		};
+		
+		button1.setOnClickListener(listener);
+		button2.setOnClickListener(listener);
+	}
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Le interfacce grafiche in Android</h2>
+                    <p>Come per le applicazioni Swing, anche in Android si definisce un listener per un particolare tipo di evento (in questo caso l'evento associato all'azione "click") e si aggiunge al componente interessato a tale evento.</p>
+
+                    <p>In questo caso, quando uno dei due pulsanti viene premuto, il testo all'interno della <strong>TextView</strong> è sostituito con il nome del <strong>Button</strong> che ha scatenato l'evento.</p>
+                </section>
+
+                <section>
+                    <h2>Esercizio</h2>
+                    <ul>
+                        <li>Realizzare semplici interfacce grafiche per i programmi svolti durante le lezioni precedenti, utilizzando la libreria Swing.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Riferimenti</h2>
+                    <dl>
+                        <dt>Documentazione Java</dt>
+                        <dd><a href="http://docs.oracle.com/javase/">http://docs.oracle.com/javase/</a></dd>
+
+                        <dt>Eckel</dt>
+                        <dd><a href="http://www.mindview.net/Books/">http://www.mindview.net/Books/</a></dd>
+                        <dd>Thinking in Java</dd>
+                        <dd>Thinking in Patterns (with Java)</dd>
+                    </dl>
+                </section>
+
+                <section style="text-align: left;">
+                    <h1>Domande?</h1>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+                // Optional reveal.js plugins
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Spegni le luci! - Programmazione orientata agli oggetti in Java</title>
+
+        <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+        <meta name="author" content="Hakim El Hattab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+        <!-- Code syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Spegni le luci!</h1>
+                    <h3>Programmazione orientata agli oggetti in Java</h3>
+                    <p><small>Giacomo Brambilla</small></p>
+                    <p><small><a href="http://www.dii.unipr.it">Dipartimento di Ingegneria dell'Informazione</a> - <a href="http://www.unipr.it">Università degli Studi di Parma</a></small></p>
+                    <p><small><a href="https://brambilla.github.io">https://brambilla.github.io</a></small></p>
+                </section>
+
+                <section>
+                    <h2>Spegni le luci!</h2>
+                    <p><em>Spegni le luci!</em> è un rompicapo tipicamente giocato su una griglia 5X5 il cui scopo è quello di spegnere tutte le luci.</p>
+                    <p>Ogni click su una mattonella della griglia modifica lo stato della mattonella cliccata e delle mattonelle adiacenti non diagonali (da accese a spente, e viceversa).</p>
+                </section>
+
+                <section>
+                    <h2>Tile.java</h2>
+                    <p>La classe <strong>Tile</strong> rappresenta una mattonella del gioco.</p>
+                    <p>Fornisce funzionalità per cambiare lo stato interno (accendere o spegnere la luce).</p>
+                </section>
+
+                <section>
+                    <h2>Tile.java</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class Tile {
+    
+    private boolean on;
+    
+    public Tile(boolean on) {
+        this.on = on;
+    }
+    
+    public void toggle() {
+        on = !on;
+    }
+
+    public boolean isOn() {
+        return on;
+    }
+    
+    public void setOn() {
+        on = true;
+    }
+    
+    public void setOff() {
+        on = false;
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Board.java</h2>
+                    <p>La classe <strong>Board</strong> rappresenta la griglia di gioco.</p>
+                    <p class="fragment">È una composizione di <strong>Tile</strong> ed espone funzionalità per:</p>
+                    <p class="fragment">cambiare lo stato di una mattonella</p>
+                    <p class="fragment">ottenere lo stato di una mattonella</p>
+                    <p class="fragment">sapere se tutte le luci sono spente</p>
+                </section>
+
+                <section>
+                    <h2>Board.java</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class Board {
+
+    private int rows;
+    private int columns;
+    private Tile[][] tiles;
+
+    public Board(int rows, int columns, int tilesOn) {
+        this.rows = rows;
+        this.columns = columns;
+        tiles = new Tile[rows][columns];
+
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < columns; j++) {
+                tiles[i][j] = new Tile(false);
+            }
+        }
+
+        Random random = new Random();
+        while(tilesOn > 0) {
+            int i = random.nextInt(rows);
+            int j = random.nextInt(columns);
+            if(!tiles[i][j].isOn()) {
+                tiles[i][j].setOn();
+                tilesOn--;
+            }
+        }
+    }
+
+    public boolean isOn(int i, int j) {
+        if(i >= 0 && i < rows && j >= 0 && j < columns) {
+            return tiles[i][j].isOn();
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isOff() {
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < columns; j++) {
+                if(tiles[i][j].isOn()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public void toggle(int i, int j) {
+        if(i >= 0 && i < rows && j >= 0 && j < columns) {
+            tiles[i][j].toggle();
+            if(i > 0) {
+                tiles[i-1][j].toggle();
+            }
+            if(i < rows-1) {
+                tiles[i+1][j].toggle();
+            }
+            if(j > 0) {
+                tiles[i][j-1].toggle();
+            }
+            if(j < columns-1) {
+                tiles[i][j+1].toggle();
+            }
+        }
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Game.java</h2>
+                    <p>La classe <strong>Game</strong> rappresenta il gioco vero e proprio con cui l'utente interagisce.</p>
+                    <p class="fragment">È stata sviluppata in due modi differenti:</p>
+                    <p class="fragment">con un'interfaccia testuale</p>
+                    <p class="fragment">con un'interfaccia grafica</p>
+                </section>
+
+                <section>
+                    <h2>Game.java (1)</h2>
+                    <p>La versione con interfaccia testuale consiste essenzialmente di un'iterazione continua che, fintantoché il gioco non è terminato (le luci della griglia sono tutte spente), propone all'utente di inserire le coordinate della mattonella di cui vuole cambiare lo stato.</p>
+                </section>
+
+                <section>
+                    <h2>Game.java (1)</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class Game {
+
+    public static void main(String[] args) {
+        int rows = 5;
+        int columns = 5;
+        int tilesOn = 4;
+
+        Board board = new Board(rows, columns, tilesOn);
+        Scanner scanner = new Scanner(System.in);
+        
+        while(!board.isOff()) {
+            for(int i=0; i < rows; i++) {
+                for(int j=0; j < columns; j++) {
+                    if(board.isOn(i, j)) {
+                        System.out.print(" ⬛ ");
+                    } else {
+                        System.out.print(" ⬜ ");
+                    }
+                }
+                System.out.println("");
+            }
+                        
+            System.out.println("Which tile do you want to toggle?");
+            System.out.print("Row: ");
+            int i = scanner.nextInt();
+            System.out.print("Column: ");
+            int j = scanner.nextInt();
+            board.toggle(i, j);
+        }
+        scanner.close();
+        
+        System.out.println("Lights Off!");
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Game.java (2)</h2>
+                    <p>La versione del gioco con interfaccia grafica è molto più semplice poiché si occupa semplicemente di inizializzare la finestra di gioco.</p>
+                </section>
+
+                <section>
+                    <h2>Game.java (2)</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class Game {
+
+    public static void main(String[] args) {
+        int rows = 5;
+        int columns = 5;
+        int tilesOn = 4;
+        
+        SwingFramework.run(new App(rows, columns, tilesOn), 400, 400);
+
+    }
+
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>App.java</h2>
+                    <p>La finestra di gioco è sia un'estensione di <strong>JFrame</strong>, sia una composizione di <strong>JIndexedButton</strong> disposti a griglia.</p>
+                    <p><strong>JIndexedButton</strong> è un'estensione di <strong>JButton</strong> la cui unica differenza è quella di essere dotata di due indici: <em>i</em> e <em>j</em>, che rappresentano le coordinate del pulsante all'interno della griglia.</p>
+                </section>
+                <section>
+                    <h2>App.java</h2>
+                    <p>Ogni <strong>JIndexedButton</strong> ha associato un <strong>ActionListener</strong> che, al verificarsi dell'evento <em>click</em>, recupera le coordinate <em>i</em> e <em>j</em> del pulsante che ha originato l'evento e le trasmette alla griglia di gioco.</p>
+                    <p>Ogni volta che avviene un evento di <em>click</em>, vengono aggiornati i colori dei <strong>JIndexedButton</strong> in base allo stato delle mattonelle della griglia, utilizzando il metodo <strong>updateColors()</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>App.java</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class App extends JFrame {
+
+    private int rows, columns;
+    private Board board;
+    private JIndexedButton[][] buttons;
+    private ActionListener listener;
+
+    public App(int rows, int columns, int tilesOn) {
+        this.rows = rows;
+        this.columns = columns;
+        board = new Board(rows, columns, tilesOn);
+        listener = new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                JIndexedButton source = (JIndexedButton) event.getSource();
+                board.toggle(source.getI(), source.getJ());
+                updateColors();
+            }
+        };
+        
+        setLayout(new GridLayout(rows, columns));
+        buttons = new JIndexedButton[rows][columns];
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < columns; j++) {
+                buttons[i][j] = new JIndexedButton(i, j);
+                buttons[i][j].addActionListener(listener);
+                add(buttons[i][j]);
+            }
+        }
+        updateColors();
+    }
+    
+    private void updateColors() {
+        if(board.isOff()) {
+            //Lights Off!
+        } else {
+            for(int i = 0; i < rows; i++) {
+                for(int j = 0; j < columns; j++) {
+                    if(board.isOn(i, j)) {
+                        buttons[i][j].setBackground(Color.BLUE);
+                    } else {
+                        buttons[i][j].setBackground(Color.BLACK);
+                    }
+                }
+            }
+        }
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>JindexedButton.java</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class JIndexedButton extends JButton {
+    
+    private int i;
+    private int j;
+    
+    public JIndexedButton(int i, int j) {
+        this.i = i;
+        this.j = j;
+    }
+    
+    public int getI() {
+        return i;
+    }
+    
+    public int getJ() {
+        return j;
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Esercizio</h2>
+                    <ul>
+                        <li>Progettare e realizzare un gioco a scacchiera (Othello, Forza quattro, …).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Riferimenti</h2>
+                    <dl>
+                        <dt>Documentazione Java</dt>
+                        <dd><a href="http://docs.oracle.com/javase/">http://docs.oracle.com/javase/</a></dd>
+
+                        <dt>Eckel</dt>
+                        <dd><a href="http://www.mindview.net/Books/">http://www.mindview.net/Books/</a></dd>
+                        <dd>Thinking in Java</dd>
+                        <dd>Thinking in Patterns (with Java)</dd>
+                    </dl>
+                </section>
+
+                <section style="text-align: left;">
+                    <h1>Domande?</h1>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+                // Optional reveal.js plugins
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>

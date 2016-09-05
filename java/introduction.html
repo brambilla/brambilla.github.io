@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Introduzione - Programmazione orientata agli oggetti in Java</title>
+
+        <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+        <meta name="author" content="Hakim El Hattab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+        <!-- Code syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Introduzione</h1>
+                    <h3>Programmazione orientata agli oggetti in Java</h3>
+                    <p><small>Giacomo Brambilla</small></p>
+                    <p><small><a href="http://www.dii.unipr.it">Dipartimento di Ingegneria dell'Informazione</a> - <a href="http://www.unipr.it">Università degli Studi di Parma</a></small></p>
+                    <p><small><a href="https://brambilla.github.io">https://brambilla.github.io</a></small></p>
+                </section>
+
+                <section>
+                    <h2>Astrazione</h2>
+                    <q>«Astrazione - Un concetto o un'idea non associata a nessuna istanza specifica.»</q>
+                    <p>Tutti i linguaggi di programmazione forniscono astrazione.</p>
+                    <p>Si può dire che la complessità dei problemi che si possono risolvere è direttamente connessa al tipo e alla qualità di astrazione.</p>
+                </section>
+
+                <section>
+                    <h2>Linguaggi assembly</h2>
+                    <p>L'assembly ha lo scopo generale di consentire al programmatore di ignorare il formato binario del linguaggio macchina: ogni codice operativo del linguaggio macchina viene sostituito da una sequenza di caratteri che lo rappresenta in forma mnemonica.</p>
+                    <p>Esempio: il codice operativo per la somma potrebbe essere trascritto come ADD e quello per il salto come JMP.</p>
+                </section>
+
+                <section>
+                    <h2>Linguaggi assembly</h2>
+                    <p>Il programma assembly risulta in questo modo relativamente più leggibile di quello in linguaggio macchina, con il quale mantiene però un totale (o quasi totale) isomorfismo.</p>
+                    <p>Il programma scritto in assembly non può essere eseguito direttamente dal processore; esso deve essere tradotto nel linguaggio macchina (binario) corrispondente, usando un programma compilatore detto <em>assembler</em>.</p>
+                </section>
+
+                <section>
+                    <h2>Linguaggi assembly</h2>
+                    <p>A causa di questa "vicinanza" all'hardware, non esiste un unico linguaggio assembly. Al contrario, ogni CPU o famiglia di CPU ha un suo proprio assembly, diverso dagli altri.</p>
+                    <p>I linguaggi assembly forniscono una piccola astrazione rispetto al calcolatore sottostante.</p>
+                </section>
+
+                <section>
+                    <h2>Linguaggi imperativi</h2>
+                    <p>La programmazione imperativa è un paradigma di programmazione secondo cui un programma viene inteso come un insieme di istruzioni (dette anche direttive o comandi), ciascuna delle quali può essere pensata come un <em>ordine</em> che viene impartito alla macchina virtuale del linguaggio di programmazione utilizzato.</p>
+                    <p>Da un punto di vista sintattico, i costrutti di un linguaggio imperativo sono spesso identificati da verbi all'imperativo, per esempio:</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+1: read i
+2: print i
+3: goto 1
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Linguaggi imperativi</h2>
+                    <p>Questi linguaggi (come ad esempio FORTRAN, BASIC e C) nonostante abbiano un livello di astrazione decisamente superiore ai linguaggi assembly, richiedono comunque di pensare in termini di struttura del computer piuttosto che di struttura del problema che si sta cercando di risolvere.</p>
+                </section>
+
+                <section>
+                    <h2>Linguaggi imperativi</h2>
+                    <p>Il programmatore deve quindi stabilire un'associazione tra il modello della macchina (<em>solution space</em>, cioè il luogo in cui la soluzione viene realizzata) e il modello del problema da risolvere (<em>problem space</em>, cioè il luogo in cui il problema esiste).</p>
+                    <p>Ciò richiede uno sforzo maggiore, con la conseguenza che i programmi sono complessi da scrivere e costosi da mantenere e gestire.</p>
+                </section>
+
+                <section>
+                    <h2><em>Problem Space</em> vs <em>Solution Space</em></h2>
+                    <p class="fragment"><em>Problem space</em>: un problema di un cliente, una necessità o un beneficio che il prodotto dovrebbe affrontare.</p>
+                    <p class="fragment">Esempio: la possibilità di scrivere nello spazio a gravità zero.</p>
+                    <p class="fragment"><em>Solution space</em>: una specifica implementazione che risponda ai requisiti del prodotto.</p>
+                    <p class="fragment">Soluzione 1: biro speciale ottenuta grazie a milioni di investimenti in ricerca e sviluppo (Stati Uniti).</p>
+                    <p class="fragment">Soluzione 2: matita (Unione Sovietica).</p>
+                </section>
+
+                <section>
+                    <h2>Linguaggi orientati agli oggetti</h2>
+                    <p>I linguaggi orientati agli oggetti forniscono ai programmatori gli strumenti per rappresentare gli elementi che caratterizzano il problema che si sta cercando di risolvere, con una rappresentazione abbastanza generica da non vincolare il programmatore ad un particolare tipo di problema.</p>
+                    <p>La rappresentazione di tali elementi prende il nome di <em>oggetto</em>.</p>
+                </section>
+
+                <section>
+                    <h2>Linguaggi orientati agli oggetti</h2>
+                    <p>L'idea alla base della programmazione orientata agli oggetti è che il problema sia descritto in termini del problema piuttosto che in termini del computer su cui la soluzione sarà eseguita.</p>
+                    <p>Ciò comporta un altro vantaggio: leggendo il codice sorgente del programma si legge direttamente la soluzione al problema indipendentemente dalla macchina specifica.</p>
+                </section>
+
+                <section>
+                    <h2>Caratteristiche di un linguaggio orientato agli oggetti</h2>
+                </section>
+
+                <section>
+                    <h2>1 - Tutto è un oggetto</h2>
+                    <p>Un oggetto contiene dati ed è in grado di eseguire operazioni su sé stesso. In teoria è possibile rappresentare qualsiasi componente del problema che si sta cercando di risolvere come oggetto del programma.</p>
+                </section>
+
+                <section>
+                    <h2>2 - Un programma è un insieme di oggetti che si scambiano messaggi</h2>
+                    <p>Per effettuare una richiesta ad un particolare oggetto occorre invocare uno dei suoi metodi. Può essere visto come l'invio di un messaggio di richiesta all'oggetto.</p>
+                </section>
+
+                <section>
+                    <h2>3 - Ogni oggetto ha una propria area di memoria costituita da altri oggetti</h2>
+                    <p>In altre parole, la creazione di un nuovo oggetto comporta la creazione di un contenitore di altri oggetti. Così facendo è possibile celare la complessità di un programma dietro la semplicità di altri oggetti.</p>
+                </section>
+
+                <section>
+                    <h2>4 - Ogni oggetto è di un tipo</h2>
+                    <p>Ogni oggetto è un'istanza di una classe, dove classe è sinonimo di tipo. La classe definisce l'insieme di messaggi che è possibile inviare ad un oggetto.</p>
+                </section>
+
+                <section>
+                    <h2>5 - Tutti gli oggetti di uno stesso tipo ricevono gli stessi messaggi</h2>
+                    <p>Come si vedrà in seguito la <em>sostituibilità</em> è uno dei concetti più importanti della programmazione orientata agli oggetti.</p>
+                </section>
+
+                <section>
+                    <h2>Definizione di un oggetto</h2>
+                    <p>Un oggetto ha uno <em>stato</em>, un <em>comportamento</em> e un'<em>identità</em>.</p>
+                    <p>Questo significa che un oggetto può avere dei dati interni (che definiscono lo stato) e dei metodi (che producono il comportamento). Inoltre, ogni oggetto può essere univocamente distinto da qualsiasi altro oggetto (concretamente, ogni oggetto ha un unico indirizzo di memoria).</p>
+                </section>
+
+                <section>
+                    <h2>Un oggetto ha un'interfaccia</h2>
+                    <p>Una classe descrive un insieme di oggetti che hanno caratteristiche (dati) e comportamenti (funzionalità) identici.</p>
+                    <p>Nella programmazione orientata agli oggetti, il programmatore definisce le classi necessarie alla risoluzione del problema piuttosto che essere obbligato ad utilizzare tipi di dato progettati per rappresentare unità di memoria della macchina.</p>
+                </section>
+
+                <section>
+                    <h2>Un oggetto ha un'interfaccia</h2>
+                    <p>Una volta che una classe è stata definita, è possibile creare oggetti appartenenti a quella classe e manipolarli come se fossero gli elementi del problema che si sta cercando di risolvere.</p>
+                    <p>La sfida della programmazione orientata agli oggetti è la corretta creazione di una mappatura tra gli elementi nello spazio dei problemi e gli oggetti nello spazio delle soluzioni.</p>
+                    <p>Le richieste che possono essere fatte a un oggetto sono definite dalla sua <em>interfaccia</em> e il tipo è ciò che determina l'interfaccia.</p>
+                </section>
+
+                <section>
+                    <h2>Un oggetto ha un'interfaccia</h2>
+                    <p>Un semplice esempio potrebbe essere la rappresentazione di una lampadina:</p>
+                    <p class="fragment">Tipo: <strong>Light</strong></p>
+                    <p class="fragment">Interfaccia: <strong>on()</strong>, <strong>off()</strong></p>
+                </section>
+
+                <section>
+                    <h2>Un oggetto ha un'interfaccia</h2>
+                    <p>L'interfaccia determina le richieste che possono essere fatte ad un particolare oggetto.</p>
+                    <p>Il codice che soddisfa la richiesta, insieme ai dati, costituisce l'<em>implementazione</em>.</p>
+                    <p>Nell'esempio, il nome del tipo/classe è <strong>Light</strong>, il nome della particolare istanza è <strong>light</strong>, e le richieste che possono essere fatte a un oggetto di tipo <strong>Light</strong> sono di accendersi e spegnersi:
+                    <pre><code class="hljs" data-trim contenteditable>
+Light light = new Light();
+light.on();
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Un oggetto ha un'interfaccia</h2>
+                    <p>Si crea un oggetto di tipo <strong>Light</strong> definendo un <em>reference</em> (riferimento) <strong>light</strong> per quell'oggetto, utilizzando <strong>new</strong> per richiedere un nuovo oggetto di quel tipo.</p>
+                    <p>Per mandare un messaggio all'oggetto, si frappone il simbolo del punto (<strong>.</strong>) tra il nome dell'oggetto e il messaggio di richiesta.</p>
+                </section>
+
+                <section>
+                    <h2>Tutto è un oggetto</h2>
+                    <p>Nonostante sia basato su C++, Java è un linguaggio "maggiormente" orientato agli oggetti.</p>
+                    <p>Sia Java, sia C++ sono linguaggi ibridi ma in Java questa ibridazione non è così importante.</p>
+                    <p>C++ mantiene infatti la retrocompatibilità con il linguaggio C e questo comporta l'inclusione di alcune caratteristiche che rendono C++ maggiormente complicato.</p>
+                </section>
+
+                <section>
+                    <h2>Tutto è un oggetto</h2>
+                    <p>Il linguaggio Java assume invece che l'unico paradigma desiderato sia quello orientato agli oggetti.</p>
+                    <p>Questo significa che per programmare in Java si deve necessariamente adottare un approccio orientato agli oggetti.</p>
+                </section>
+
+                <section>
+                    <h2>Gli oggetti si manipolano tramite i riferimenti</h2>
+                    <p>Ogni linguaggio di programmazione ha i suoi meccanismi per manipolare gli elementi in memoria.</p>
+                    <p>In Java questo è semplificato in quanto tutto è trattato come se fosse un oggetto.</p>
+                    <p>Anche se tutto è trattato come un oggetto, ciò che si manipola è un riferimento (reference) all'oggetto.</p>
+                </section>
+
+                <section>
+                    <h2>Gli oggetti si manipolano tramite i riferimenti</h2>
+                    <p>Ad esempio, nel caso in cui si desideri gestire una lampadina, è possibile creare un riferimento di tipo <strong>Light</strong>:</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+Light light;
+                    </code></pre>
+                    <p>In questo caso è stato creato solamente il riferimento, non l'oggetto. Se si decidesse di inviare un messaggio a <strong>light</strong>, si otterrebbe un errore in quanto <strong>light</strong> non si riferisce effettivamente a nessun oggetto.</p>
+                </section>
+
+                <section>
+                    <h2>Gli oggetti devono essere creati</h2>
+                    <p>Quando si crea un riferimento, si vuole che questo sia connesso ad un oggetto.</p>
+                    <p>In gerale ciò si ottiene tramite l'operatore <strong>new</strong>.</p>
+                    <p>La parola chiave <strong>new</strong> indica: "crea un nuovo oggetto di questo tipo".</p>
+                </section>
+
+                <section>
+                    <h2>Gli oggetti devono essere creati</h2>
+                    <p>Proseguendo l'esempio precedente:</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+Light light = new Light();
+                    </code></pre>
+                    <p>Questo significa: "crea un nuova lampadina e collegala al riferimento <strong>light</strong>".</p>
+                    <p>In Java esiste naturalmente un grande numero di tipi predefiniti ma ciò che è importante è la creazione dei propri tipi, l'attività fondamentale della programmazione ad oggetti.</p>
+                </section>
+
+                <section>
+                    <h2>Caso particolare: tipi primitivi</h2>
+                    <p>Un gruppo particolare di tipi (spesso utilizzati) sono i tipi primitivi.</p>
+                    <p>La ragione per cui meritano un trattamento speciale, deriva dal fatto che la creazione di un oggetto tramite la parola chiave <strong>new</strong> è poco efficace in caso di piccole e semplici variabili e quindi, per questi tipi, Java adotta lo stesso approccio dei linguaggi C e C++.</p>
+                    <p>Cioè, invece di creare una variabile usando <strong>new</strong>, crea una variabile che non è un riferimento (reference) ma è una variabile che assume direttamente un valore.</p>
+                </section>
+
+                <section>
+                    <h2>Tipi primitivi</h2>
+                    <ul>
+                        <li><strong>boolean</strong>: ammette i valori <strong>true</strong> e <strong>false</strong></li>
+                        <li><strong>byte</strong>: numeri interi da -128 a 127</li>
+                        <li><strong>short</strong>: numeri interi da -32768 a 32767</li>
+                        <li><strong>char</strong>: numeri interi da '\u0000' a '\uffff'</li>
+                        <li><strong>int</strong>: numeri interi da -2147483648 a 2147483647</li>
+                        <li><strong>long</strong>: numeri interi da -9223372036854775808 a 9223372036854775807</li>
+                        <li><strong>float</strong>: numeri a virgola mobile (32 bit)</li>
+                        <li><strong>double</strong>: numeri a virgola mobile (64 bit)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Array in Java</h2>
+                    <p>L'utilizzo degli array in C e C++ è spesso fonte di errori poiché questi array sono semplici blocchi di memoria: se un programma accede ad un array fuori dal suo blocco di memoria oppure utilizza la memoria prima della sua inizializzazione (errore di programmazione molto comune) accadono risultati impredicibili.</p>
+                    <p>In Java è garantito che gli array siano inizializzati e non è possibile accedere all'esterno del suo range.</p>
+                    <p>Questo a scapito di un leggero consumo maggiore di risorse per ogni array ma con un incremento in sicurezza e produttività.</p>
+                </section>
+
+                <section>
+                    <h2>Array in Java</h2>
+                    <p>Quando si crea un array di oggetti, ciò che si crea è effettivamente un array di riferimenti e ciascuno di questi riferimenti è inizializzato ad un valore speciale apposito: <strong>null</strong>.</p>
+                    <p>Quando Java vede <strong>null</strong>, riconosce che il riferimento in questione non sta puntando ad alcun oggetto.</p>
+                    <p>Deve quindi essere assegnato un oggetto ad ogni riferimento dell'array prima di poter essere utilizzato.</p>
+                </section>
+
+                <section>
+                    <h2>Il concetto di <em>scope</em></h2>
+                    <p>La maggior parte dei linguaggi procedurali ha il concetto di </em>scope</em> che determina sia la visibilità della variabile, sia il ciclo di vita dei nomi definiti al suo interno. In Java, come in C e C++, lo scope è definito dalle parentesi graffe.</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+{
+    int x = 12;
+    // Solamente x è disponibile
+    {
+        int q = 96;
+        // Sia x, sia q sono disponibili
+    }
+    // Solamente x è disponibile, q è fuori dallo scope
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Gli oggetti non devono mai essere distrutti</h2>
+                    <p>Gli oggetti Java non hanno lo stesso tempo di vita dei tipi primitivi.</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+{
+    Light light = new Light();
+}
+// Fine dello scope
+                    </code></pre>
+                    <p>Il reference <strong>light</strong> scompare al termine dello scope. Comunque, l'oggetto di tipo <strong>Light</strong> a cui il reference <strong>light</strong> puntava, rimane in memoria.</p>
+                </section>
+
+                <section>
+                    <h2>Gli oggetti non devono mai essere distrutti</h2>
+                    <p>Nell'esempio di codice mostrato, non c'è nessun modo per accedere all'oggetto alla fine dello scope, poiché l'unico riferimento all'oggetto, non è più disponibile.</p>
+                    <p>Nel caso del C++, poiché l'oggetto è stato creato ma non è più utilizzabile in quanto non è più disponibile nessun riferimento, il programmatore dovrebbe preocupparsi di cancellare l'oggetto in memoria.</p>
+                </section>
+
+                <section>
+                    <h2>Gli oggetti non devono mai essere distrutti</h2>
+                    <p>In Java questo non è necessario in quanto è presente un <em>garbage collector</em> che controlla tutti gli oggetti creati con <strong>new</strong>, verifica quali non sono più referenziati e li cancella, liberando memoria.</p>
+                    <p>In questo modo si eliminano tutti i problemi detti di <em>memory leak</em>, in cui il programmatore si dimentica di rilasciare la memoria eliminando gli oggetti, in quanto tale compito è demandato al garbage collector.</p>
+                </section>
+
+                <section>
+                    <h2>Creare nuovi tipi di dato: class</h2>
+                    <p>La parola chiave <strong>class</strong>, seguita dal nome del nuovo tipo, determina come una particolare classe di oggetti appare e si comporta.</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+class Light {
+    /* Il corpo della classe va qui */
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Campi e metodi</h2>
+                    <p>Quando si definisce una classe (e in Java si definiscono classi, si creano oggetti di queste classi e si inviano messaggi a questi oggetti) è possibile inserire due tipi di elementi nelle classi: <em>campi</em> e <em>metodi</em>.</p>
+                    <p>Un campo può essere un oggetto di qualsiasi classe o un tipo primitivo.</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+class Light {
+    double watt;
+    boolean on;
+    Color color;
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Campi e metodi</h2>
+                    <p>La classe non fa nulla eccetto memorizzare dati.</p>
+                    <p>È possibile creare un oggetto in questo modo e assegnare valori ai suoi campi, indicando il nome dell'oggetto seguito da un punto e quindi dal nome del campo all'interno dell'oggetto:</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+Light light = new Light();
+light.watt = 4.0;
+light.on = false;
+light.color.red = 255;
+                    </code></pre>
+                    <p>La classe <strong>Light</strong> non può fare nulla a parte memorizzare i valori dei dati poiché non ha metodi.</p>
+                </section>
+
+                <section>
+                    <h2>Valori di default per i tipi primitivi</h2>
+                    <p>Quando un tipo primitivo è membro di una classe, Java garantisce che abbia un valore di default nel caso non sia inizializzato.</p>
+                </section>
+
+                <section>
+                    <h2>Valori di default per i tipi primitivi</h2>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>boolean</td>
+                                <td>false</td>
+                            </tr>
+                            <tr>
+                                <td>float</td>
+                                <td>0.0f</td>
+                            </tr>
+                            <tr>
+                                <td>double</td>
+                                <td>0.0d</td>
+                            </tr>
+                            <tr>
+                                <td>byte</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>short</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>char</td>
+                                <td>'\u0000'</td>
+                            </tr>
+                            <tr>
+                                <td>int</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>long</td>
+                                <td>0L</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section>
+                    <h2>Metodi, argomenti e valori di ritorno</h2>
+                    <p>I metodi in Java determinano i messaggi che un oggetto può ricevere.</p>
+                    <p class="fragment">Le parti fondamentali di un metodo sono</p>
+                    <p class="fragment">il nome</p>
+                    <p class="fragment">gli argomenti</p>
+                    <p class="fragment">il tipo di ritorno</p>
+                    <p class="fragment">il corpo</p>
+                </section>
+
+                <section>
+                    <h2>Metodi, argomenti e valori di ritorno</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+TipoDiRitorno nomeDelMetodo (/* Lista degli argomenti */) {
+    /* Corpo del metodo */
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Metodi, argomenti e valori di ritorno</h2>
+                    <p>Il tipo di ritorno descrive il valore restituito dal metodo dopo che è stato chiamato.</p>
+                    <p>La lista degli argomenti indica i nomi e i tipi delle informazioni che occorre fornire al metodo.</p>
+                    <p>Il nome del metodo e la lista degli argomenti identificano univocamente il metodo e per questo sono detti <em>signature</em> del metodo.</p>
+                </section>
+
+                <section>
+                    <h2>Metodi, argomenti e valori di ritorno</h2>
+                    <p>Per invocare un metodo di un oggetto occorre indicare il nome del riferimento all'oggetto, seguito da un punto e dal metodo con la sua lista di argomenti.</p>
+                    <p>Per esempio, supponendo che un oggetto <strong>a</strong> fornisca un metodo <strong>f()</strong> che non ha argomenti e con tipo di ritorno <strong>int</strong>, è possibile fare questo:</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+int x = a.f();
+                    </code></pre>
+                    <p>Il tipo del valore di ritorno deve essere compatibile con il tipo della variabile <strong>x</strong>. La chiamata di un metodo di un oggetto è detto "invio di un messaggio ad un oggetto".</p>
+                </section>
+
+                <section>
+                    <h2>Lista degli argomenti</h2>
+                    <p>La lista degli argomenti specifica le informazioni fornite al metodo.</p>
+                    <p>Naturalmente queste informazioni, come qualsiasi altra cosa in Java, sono oggetti.</p>
+                    <p>Ciò che occorre specificare nella lista degli argomenti sono i tipi degli oggetti da passare ed il loro nome da utilizzare.</p>
+                </section>
+
+                <section>
+                    <h2>Lista degli argomenti</h2>
+                    <p>Per esempio, il metodo seguente accetta un oggetto <strong>String</strong> come argomento:</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+int lunghezzaDoppia(String s) {
+    return s.lenght() * 2;
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Metodi, argomenti e valori di ritorno</h2>
+                    <p>L'argomento di tipo <strong>String</strong> del metodo mostrato nell'esempio è chiamato <strong>s</strong>.</p>
+                    <p>Nel corpo del metodo è invocato il metodo <strong>lenght()</strong> per l'oggetto <strong>s</strong>, un metodo definito nella classe <strong>String</strong> che restituisce il numero di caratteri nella stringa.</p>
+                </section>
+
+                <section>
+                    <h2>Metodi, argomenti e valori di ritorno</h2>
+                    <p>Da notare l'utilizzo della parola chiave <strong>return</strong> che svolge due operazioni: indica la conclusione del metodo e restituisce il valore di ritorno.</p>
+                    <p>È possibile restituire qualsiasi tipo si desideri, ma nel caso non si desideri restituire nulla è possibile farlo utilizzando la parola chiave <strong>void</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>Metodi, argomenti e valori di ritorno</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+int valore() {
+    return 4;
+}
+
+void niente() {
+    return;
+}
+
+void niente2() {
+}
+                    </code></pre>
+                    <p>Quando il tipo di ritorno è <strong>void</strong>, la parola chiave <strong>return</strong> serve semplicemente per uscire dal metodo e non è quindi necessaria nel caso si raggiunga la fine del metodo.</p>
+                </section>
+
+                <section>
+                    <h2>Visibilità dei nomi</h2>
+                    <p>Un problema in qualsiasi linguaggio di programmazione è riuscire a distinguere nomi uguali definiti in moduli diversi.</p>
+                    <p>Java ha risolto questo problema utilizzando <em>namespace</em> per la definizione di ogni classe.</p>
+                    <p>In Java le classi definite all'interno di uno stesso file devono avere nomi univoci e ogni file è individuato da un <em>namespace</em>.</p>
+                    <p>Tipicamente per produrre namespace univoci si utilizza il proprio dominio internet scritto al contrario.</p>
+                </section>
+
+                <section>
+                    <h2>Visibilità dei nomi</h2>
+<p>Per utilizzare una classe definita in un file differente, occorre informare il compilatore su quale classe esattamente si intende utilizzare.</p>
+<p>Per fare ciò, si utilizza la parola chiave <strong>import</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>Visibilità dei nomi</h2>
+                    <p>Ad esempio, per indicare al compilare di utilizzare la classe <strong>ArrayList</strong> predefinita in Java:</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+import java.util.ArrayList;
+                    </code></pre>
+                    <p>Per indicare al compilatore di utilizzare tutte le classi definite nel package <strong>util</strong>, è possibile utilizzare il simbolo asterisco (<strong>*</strong>):</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+import java.util.*;
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Parola chiave static</h2>
+                    <p>Tipicamente quando si crea una classe, si definisce come gli oggetti di quella classe appaiono e come si comportano.</p>
+                    <p>Solamente utilizzando <strong>new</strong> si crea effettivamente un oggetto, allocando quindi la memoria necessaria e rendendo disponibili i metodi per quell'oggetto.</p>
+                </section>
+
+                <section>
+                    <h2>Parola chiave static</h2>
+                    <p>Ci sono due situazioni in cui questo non è sufficiente:</p>
+                    <p class="fragment">quando si vuole avere un'unica valorizzazione per un particolare campo, indipendentemente da quanti oggetti di quella classe siano creati</p>
+                    <p class="fragment">nel caso in cui occorra un metodo che non è associato ad un particolare oggetto della classe; un metodo quindi che può essere invocato senza che siano stati creati oggetti</p>
+                </section>
+
+                <section>
+                    <h2>Parola chiave static</h2>
+                    <p>Entrambi gli effetti si possono ottenere con la parola chiave <strong>static</strong>.</p>
+                    <p>Con la parola chiave <strong>static</strong>, si afferma che un particolare campo o metodo non è associato ad una particolare istanza (oggetto) di quella classe.</p>
+                    <p>Quindi è possibile chiamare un metodo statico o accedere ad un campo statico anche se non sono stati creati oggetti per quella classe.</p>
+                </section>
+
+                <section>
+                    <h2>Parola chiave static</h2>
+                    <p>Per ottenere un campo o un metodo statico, è sufficiente indicare la parola chiave <strong>static</strong> prima della definizione:</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+class StaticTest {
+
+    static int i = 47;
+
+    static void increment() {
+        i = i + 1;
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Parola chiave static</h2>
+                    <p>La classe definita nell'esempio precedente ha un campo e un metodo, entrambi statici:</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+StaticTest st1 = new StaticTest();
+StaticTest st2 = new StaticTest();
+StaticTest.increment();
+StaticTest.i = 50;
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Il primo programma Java</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+import java.util.*;
+
+public class HelloDate {
+
+    public static void main(String args[]) {
+        System.out.println("Ciao, oggi è il: ");
+        System.out.println(new Date());
+    }
+
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Il primo programma Java</h2>
+                    <p>All'inizio di ogni file sono presenti gli <strong>import</strong> per utilizzare le classi esterne.</p>
+                    <p>La libreria <strong>java.lang</strong> è automaticamente inclusa in ogni file Java.</p>
+                    <p>La classe <strong>Date</strong> è definita nella libreria <strong>java.util</strong> e quindi occorre importarla.</p>
+                </section>
+
+                <section>
+                    <h2>Il primo programma Java</h2>
+                    <p>La classe <strong>System</strong> è definita nella libreria <strong>java.lang</strong>, <strong>out</strong> è un campo statico di tipo <strong>PrintStream</strong> definito nella classe.</p>
+                    <p><strong>println()</strong> è un metodo della classe <strong>PrintStream</strong> che permette di scrivere l'argomento del metodo nella console, seguito da un carattere di "a capo".</p>
+                    <p>Il nome della classe deve essere uguale al nome del file.</p>
+                </section>
+
+                <section>
+                    <h2>Il primo programma Java</h2>
+                    <p>Per creare una classe <em>standalone</em>, che possa essere quindi essere eseguita direttamente, deve essere presente un metodo <strong>main()</strong> con questi tipo di ritorno e signature:</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+public static void main(String args[])
+                    </code></pre>
+                    <p>La keyword <strong>public</strong> indica che il metodo è disponibile all'esterno (descritto in dettaglio in seguito).</p>
+                </section>
+
+                <section>
+                    <h2>Il primo programma Java</h2>
+                    <p>L'argomento del metodo è un array di oggetti di tipo <strong>String</strong> (non utilizzato in questo esempio).</p>
+                    <p>Per quanto riguarda la stampa della data, viene creato un oggetto di tipo <strong>Date</strong>, automaticamente convertito in un oggetto <strong>String</strong> e inviato a <strong>println()</strong>.</p>
+                    <p>Non appena questo viene eseguito, l'oggetto <strong>Date</strong> non è più necessario e il garbage collector può eliminarlo senza che noi dobbiamo preocupparcene.</p>
+                </section>
+
+                <section>
+                    <h2>Compilazione ed esecuzione</h2>
+                    <p>Per compilare ed eseguire il programma occorre un JDK (<em>Java Development Kit</em>) che consente di compilare ed eseguire programmi Java.</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+javac HelloDate.java
+                    </code></pre>
+                    <p>Questo comando compila la classe HelloDate.java in bytecode, un linguaggio intermedio tra il linguaggio macchina e il linguaggio di programmazione.</p>
+                    <p>Il bytecode viene effettivamente eseguito dalla JVM (<em>Java Virtual Machine</em>).</p>
+                </section>
+
+                <section>
+                    <h2>Compilazione ed esecuzione</h2>
+                    <p>L'esecuzione del comando precedente produce un file HelloDate.class.</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+java HelloDate
+                    </code></pre>
+                    <p>Questo comando esegue il programma.</p>
+                </section>
+
+                <section>
+                    <h2>Commenti</h2>
+                    <p>In Java ci sono due tipi di commenti: una versione ereditata dal C che inizia con <strong>/*</strong> e termina con <strong>*/</strong> ed una versione ereditata dal C++, per commenti su singola linea, che inizia con <strong>//</strong>.</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+/* Questo è un commento
+    su più linee */
+
+//  Questo è un commento su una singola linea
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Documentazione</h2>
+<p>Uno degli aspetti più importanti della programmazione software è la documentazione del codice.</p>
+<p>In Java si è pensato di fornire uno strumento che permette di documentare il codice direttamente all'interno del codice stesso: <em>Javadoc</em>.</p>
+<p>Javadoc è parte del JDK e permette di creare pagine web direttamente da particolari commenti inseriti nel codice.</p>
+                </section>
+
+                <section>
+                    <h2>Esempio completo di commenti e documentazione</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+import java.util.Date;
+
+/** Il mio primo programma.
+ * Stampa una stringa di testo e la data odierna.
+ * @author Giacomo
+ * @version 1.0
+ */
+public class HelloDate {
+    /**  Punto di inizio della classe e dell'applicazione.
+     * @param args un array di parametri di tipo stringa
+     */
+    public static void main(String[] args) {
+        System.out.println("Ciao, oggi è il: ");
+        System.out.println(new Date());
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Stile del codice</h2>
+                    <p>Convenzione per il codice scritto in Java è di utilizzare lo stile <em>camel-case</em>:</p>
+                    <p class="fragment">il nome di ogni classe inizia con una lettera maiuscola</p>
+                    <p class="fragment">se il nome di una classe è costituito da più parole, tutte le parole sono attaccate ed iniziano con una lettera maiuscola</p>
+                    <p class="fragment">metodi, campi e reference di oggetti adottano lo stesso stile a parte per la prima lettera che deve essere in minuscolo</p>
+                </section>
+
+                <section>
+                    <h2>IDE</h2>
+                    <p>Con IDE (<em>integrated development environment</em>) si intende un software che, in fase di programmazione, aiuta i programmatori nello sviluppo del codice sorgente di un programma.</p>
+                    <p>Spesso l'IDE aiuta lo sviluppatore segnalando errori di sintassi del codice direttamente in fase di scrittura, oltre a tutta una serie di strumenti e funzionalità di supporto alla fase di sviluppo e debugging.</p>
+                </section>
+
+                <section>
+                    <h2>IDE</h2>
+                    <p>Normalmente è uno strumento software che consiste di più componenti, da cui appunto il nome integrato:</p>
+                    <p class="fragment">un editor di codice sorgente</p>
+                    <p class="fragment">un compilatore e/o un interprete</p>
+                    <p class="fragment">un tool di building automatico</p>
+                    <p class="fragment">(solitamente) un debugger</p>
+                </section>
+
+                <section>
+                    <h2>Eclipse</h2>
+                    <p>Eclipse è l'IDE utilizzato in questo corso:</p>
+                    <p class="fragment">multilinguaggio</p>
+                    <p class="fragment">multipiattaforma</p>
+                    <p class="fragment">software libero</p>
+                </section>
+
+                <section>
+                    <h2>Esercizi</h2>
+                    <ul>
+                        <li>Impratichirsi con l'uso di Eclipse realizzando ed eseguendo semplici programmi Java.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Riferimenti</h2>
+                    <dl>
+                        <dt>Documentazione Java</dt>
+                        <dd><a href="http://docs.oracle.com/javase/">http://docs.oracle.com/javase/</a></dd>
+
+                        <dt>Eckel</dt>
+                        <dd><a href="http://www.mindview.net/Books/">http://www.mindview.net/Books/</a></dd>
+                        <dd>Thinking in Java</dd>
+                        <dd>Thinking in Patterns (with Java)</dd>
+                    </dl>
+                </section>
+
+                <section style="text-align: left;">
+                    <h1>Domande?</h1>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+                // Optional reveal.js plugins
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>

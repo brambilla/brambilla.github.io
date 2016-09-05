@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Operatori - Programmazione orientata agli oggetti in Java</title>
+
+        <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+        <meta name="author" content="Hakim El Hattab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+        <!-- Code syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Operatori</h1>
+                    <h3>Programmazione orientata agli oggetti in Java</h3>
+                    <p><small>Giacomo Brambilla</small></p>
+                    <p><small><a href="http://www.dii.unipr.it">Dipartimento di Ingegneria dell'Informazione</a> - <a href="http://www.unipr.it">Università degli Studi di Parma</a></small></p>
+                    <p><small><a href="https://brambilla.github.io">https://brambilla.github.io</a></small></p>
+                </section>
+
+                <section>
+                    <h2>Operatori</h2>
+                    <p>Poiché Java deriva dal C++, la maggior parte degli operatori è simile al C e al C++. Java presenta comunque alcuni miglioramenti e semplificazioni.</p>
+                </section>
+
+                <section>
+                    <h2>Operatori</h2>
+                    <p>Un operatore prevede uno o più argomenti e produce un nuovo valore.</p>
+                    <p>Gli argomenti sono ordinati in modo differente rispetto alle normali chiamate a metodi, ma il risultato è più o meno lo stesso.</p>
+                    <p>Tutti gli operatori producono un valore a partire dai loro operandi.</p>
+                </section>
+
+                <section>
+                    <h2>Operatori</h2>
+                    <p>La maggior parte degli operatori funziona esclusivamente con i tipi primitivi ad eccezione di <strong>=</strong>, <strong>==</strong> e <strong>!=</strong> che funzionano anche con gli oggetti (con un significato diverso).</p>
+                    <p>Inoltre, la classe <strong>String</strong> supporta anche gli operatori <strong>+</strong> e <strong>+=</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>Precedenza</h2>
+                    <p>Le regole di precedenza degli operatori definiscono come un'espressione debba essere valutata quando più operatori sono presenti.</p>
+                    <p>Java ha delle regole specifiche per determinare l'ordine con cui gli operatori debbano essere valutati (la regola più semplice è che la moltiplicazione e la divisione hanno la precedenza rispetto all'addizione e alla sottrazione).</p>
+                </section>
+
+                <section>
+                    <h2>Precedenza</h2>
+                    <p>Poiché spesso ci si dimentica le regole di precedenza degli operatori, è possibile esplicitare l'ordine di valutazione delle espressioni utilizzando le parentesi.</p>
+                </section>
+
+                <section>
+                    <h2>Precedenza</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class Precedence {
+
+    public static void main(String[] args) {
+        int x = 1, y = 2, z = 3;
+        int a = x + y - 2/2 + z;
+        int b = x + (y - 2)/(2 + z);
+        System.out.println("a = " + a + " b = " + b);
+    }
+}
+
+/* Output:
+a = 5 b = 1
+*/
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Precedenza</h2>
+                    <p>Nonostante i valori di <strong>a</strong> e <strong>b</strong> siano definiti da espressioni simili, sono completamente diversi.</p>
+                    <p>Da notare che <strong>System.out.println()</strong> utilizza l'operatore <strong>+</strong> che in questo contesto significa "concatena le stringhe" e se necessario "converti a stringa".</p>
+                </section>
+
+                <section>
+                    <h2>Assegnamento</h2>
+                    <p>L'assegnamento si effettua tramite l'operatore <strong>=</strong> e significa "prendi il valore a destra e copialo a sinistra".</p>
+                    <p>A destra può esserci una costante, una variabile o una qualsiasi espressione che produca un valore, a sinistra deve esserci una variabile.</p>
+                    <p>L'assegnamento a tipi primitivi è abbastanza semplice poiché quello che avviene è effettivamente una copia del valore da un posto ad un altro.</p>
+                    <p>Ad esempio, con <strong>a=b</strong> (se <strong>a</strong> e <strong>b</strong> di tipo primitivo), il contenuto di <strong>b</strong> è copiato in <strong>a</strong> e la successiva modifica di <strong>a</strong> non si ripercuote su <strong>b</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>Assegnamento</h2>
+                    <p>Quando si assegnano oggetti, le cose cambiano.</p>
+                    <p>Quando si manipola un oggetto infatti, ciò che si manipola è il riferimento (reference) all'oggetto e quindi quando si effettua un assegnamento "da un oggetto ad un altro", si sta effettivamente copiando il riferimento da un posto ad un altro.</p>
+                    <p>Questa significa che con <strong>c=d</strong> (dove <strong>c</strong> e <strong>d</strong> sono entrambi oggetti), sia <strong>c</strong> sia <strong>d</strong> si riferiscono al medesimo oggetto a cui originariamente solo <strong>d</strong> si riferiva.</p>
+                </section>
+
+                <section>
+                    <h2>Assegnamento</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+class Tank {
+    int level;
+}
+
+public class Assignment {
+
+    public static void main(String[] args) {
+        Tank t1 = new Tank();
+        Tank t2 = new Tank();
+        t1.level = 9;
+        t2.level = 47;
+        System.out.println("1: t1.level: " + t1.level + ", t2.level: " + t2.level);
+        t1 = t2;
+        System.out.println("2: t1.level: " + t1.level + ", t2.level: " + t2.level);
+        t1.level = 27;
+        System.out.println("3: t1.level: " + t1.level + ", t2.level: " + t2.level);
+    }
+}
+
+/* Output:
+1: t1.level: 9, t2.level: 47
+2: t1.level: 47, t2.level: 47
+3: t1.level: 27, t2.level: 27
+*/
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Assegnamento</h2>
+                    <p>Nel metodo <strong>main()</strong> sono create due istanze (<strong>t1</strong> e <strong>t2</strong>) della classe <strong>Tank</strong>.</p>
+                    <p>Inizialmente il valore di <strong>level</strong> dei due <strong>Tank</strong> è differente poiché effettivamente i due oggetti associati a <strong>t1</strong> e <strong>t2</strong> hanno valori diversi.</p>
+                </section>
+
+                <section>
+                    <h2>Assegnamento</h2>
+                    <p>Assegnando <strong>t2</strong> a <strong>t1</strong> il riferifemento all'oggetto cui <strong>t2</strong> si riferisce è copiato in <strong>t1</strong> e quindi <strong>t1</strong> e <strong>t2</strong> puntano allo stesso oggetto, dal momento che contengono lo stesso reference.</p>
+                    <p>Da notare che il reference originariamente presente in <strong>t1</strong> (che si riferiva all'oggetto il cui valore di <strong>level</strong> era pari a 9) è stato sovrascritto e definitamente perso: l'oggetto sarà automaticamente cancellato dal garbage collector.</p>
+                </section>
+
+                <section>
+                    <h2>Assegnamento</h2>
+                    <p>Questo fenomeno è detto <em>aliasing</em> ed è di fondamentale importanza in Java.</p>
+                    <p>Nel caso in cui si desideri evitare l'aliasing è possibile effettuare il seguente assegnamento:</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+t1.level = t2.level;
+                    </code></pre>
+                    <p>Vedremo però in seguito che la manipolazione dei campi all'interno degli oggetti va contro i principi di buona programmazione ad oggetti.</p>
+                </section>
+
+                <section>
+                    <h2>Aliasing nelle chiamate ai metodi</h2>
+                    <p>L'aliasing si verifica anche nel caso in cui si passino oggetti come parametri di un metodo:</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+class Letter {
+    char c;
+}
+
+public class PassObject {
+
+    static void f(Letter y) {
+        y.c = 'z';
+    }
+
+    public static void main(String[] args) {
+        Letter x = new Letter();
+        x.c = 'a';
+        System.out.println("1: x.c: " + x.c);
+        f(x);
+        System.out.println("2: x.c: " + x.c);
+    }
+}
+
+/* Output:
+1: x.c: a
+2: x.c: z
+*/
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Aliasing nelle chiamate ai metodi</h2>
+                    <p>Dal momento che viene passato al metodo <strong>f()</strong> un riferimento all'oggetto <strong>Letter</strong> e non una sua copia, viene effettivamente cambiato l'oggetto anche al di fuori di <strong>f()</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>Operatori matematici</h2>
+                    <p>Gli operatori matematici sono praticamente gli stessi disponibili nella maggior parte dei linguaggi di programmazione: addizione (<strong>+</strong>), sottrazione (<strong>-</strong>), divisione, (<strong>/</strong>), moltiplicazione (<strong>*</strong>) e modulo (<strong>%</strong>, che produce il resto della divisione intera).</p>
+                    <p>Java utilizza inoltre la notazione del C/C++ che permette l'esecuzione di un'operatore e l'assegnamento allo stesso tempo: l'operatore direttamente seguito dal simbolo <strong>=</strong>.</p>
+                    <p>Ad esempio, per aggiungere 4 alla variabile <strong>x</strong> e assegnare il risultato ad <strong>x</strong> stessa, è possibile scrivere <strong>x += 4</strong>.
+                </section>
+
+                <section>
+                    <h2>+ e - come operatori unari</h2>
+                    <p>I simboli <strong>+</strong> e <strong>-</strong> possono essere utilizzati come operatori unari con significato ovvio: il simbolo <strong>-</strong> inverte il segno dei dati, il simbolo <strong>+</strong> non ha alcun effetto.</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+x = -a; //Il valore di x è opposto a quello di a
+
+x = a * -b; //Il valore di x è il prodotto tra a e l'opposto di b
+
+x = a * (-b); //Equivalente all'espressione precedente
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Incremento e decremento</h2>
+                    <p>Due scorciatoie ereditate dal C sono gli operatori di incremento e decremento:</p>
+                    <p class="fragment"><strong>++</strong> significa "incrementa di una unità"</p>
+                    <p class="fragment"><strong>--</strong> significa "decrementa di una unità"</p>
+                    <p class="fragment">Ad esempio, se <strong>a</strong> è un <strong>int</strong>, l'espressione <strong>++a</strong> è equivalente a (<strong>a = a + 1</strong>).</p>
+                </section>
+
+                <section>
+                    <h2>Incremento e decremento</h2>
+                    <p>Esistono due versioni di entrambi gli operatori: <em>preincremento</em> e <em>postincremento</em>, a seconda che gli operatori appaiano prima o dopo la variabile, rispettivamente.</p>
+                    <p>Differenza: per il preincremento e il predecremento (ad esempio, <strong>++a</strong> o <strong>--a</strong>), l'operazione è eseguita e successivamente è prodotto il valore; per il postincremento e il postdecremento (ad esempio, <strong>a++</strong> o <strong>a--</strong>), il valore è prodotto e successivamente è eseguita l'operazione.</p>
+                </section>
+
+                <section>
+                    <h2>Incremento e decremento</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class AutoInc {
+
+    public static void main(String[] args) {
+        int i = 1;
+        System.out.println("i : " + i);
+        System.out.println("++i : " + ++i); // Pre-incremento
+        System.out.println("i++ : " + i++); // Post-incremento
+        System.out.println("i : " + i);
+        System.out.println("--i : " + --i); // Pre-decremento
+        System.out.println("i-- : " + i--); // Post-decremento
+        System.out.println("i : " + i);
+    }
+}
+
+/* Output:
+i : 1
+++i : 2
+i++ : 2
+i : 3
+--i : 2
+i-- : 2
+i : 1
+*/
+                    </code></pre>
+                    <p>Questi sono gli unici operatori (a parte quelli che riguardano l'assegnamento) che modificano l'operando piuttosto che utilizzarne solamente il valore.
+                </section>
+
+                <section>
+                    <h2>Operatori relazionali</h2>
+                    <p>Gli operatori relazionali generano un valore di tipo <strong>boolean</strong>.</p>
+                    <p>Un'espressione relazionale produce <strong>true</strong> se la relazione è vera, e <strong>false</strong> se la relazione è falsa.</p>
+                    <p>Gli operatori relazionali sono <strong><</strong> ("minore di"), <strong>></strong> ("maggiore di"), <strong><=</strong> ("minore o uguale di"), <strong>>=</strong> ("maggiore o uguale di"), <strong>==</strong> ("uguale a") e <strong>!=</strong> ("diverso a").</p>
+                    <p>L'equivalenza e la non-equivalenza funzionano con tutti i tipi primitivi; gli altri operatori relazionali non funzionano con il tipo <strong>boolean</strong> in quanto questo può essere solo <strong>true</strong> o <strong>false</strong> e non ha quindi senso dire "maggiore di" o "minore di".</p>
+                </section>
+
+                <section>
+                    <h2>Equivalenza tra oggetti</h2>
+                    <p>Gli operatori relazionali <strong>==</strong> e <strong>!=</strong> funzionano anche con gli oggetti ma il loro significato può trarre in confusione.</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class Equivalence {
+
+    public static void main(String[] args) {
+        Integer n1 = new Integer(47);
+        Integer n2 = new Integer(47);
+        System.out.println(n1 == n2);
+        System.out.println(n1 != n2);
+    }
+}
+
+/* Output:
+false
+true
+*/
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Equivalenza tra oggetti</h2>
+                    <p><strong>System.out.println(n1 == n2)</strong> stampa il risultato della comparazione tra i reference <strong>n1</strong> e <strong>n2</strong>, che effettivamente sono diversi, e non la comparazione del <em>contenuto</em> dei due oggetti che invece sono uguali.</p>
+                    <p>Gli operatori <strong>==</strong> e <strong>!=</strong> confrontano quindi i riferimenti degli oggetti.</p>
+                </section>
+
+                <section>
+                    <h2>Equivalenza tra oggetti</h2>
+                    <p>Come si fa quindi a confrontare il contenuto di due oggetti?</p>
+                    <p class="fragment">Bisogna utilizzare il metodo <strong>equals()</strong> che esiste per tutti gli oggetti.</p>
+                </section>
+
+                <section>
+                    <h2>Equivalenza tra oggetti</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class EqualsMethod {
+
+    public static void main(String[] args) {
+        Integer n1 = new Integer(47);
+        Integer n2 = new Integer(47);
+        System.out.println(n1.equals(n2));
+    }
+}
+
+/* Output:
+true
+*/
+                    </code></pre>
+                    <p>Nel caso di classi create da voi, affinché il metodo <strong>equals()</strong> funzioni come più si desidera, occorre ridefinire il metodo nella classe stessa in quanto il suo comportamento di default è di confrontare i riferimenti degli oggetti.</p>
+                </section>
+
+<section>
+                    <h2>Esercizi</h2>
+                    <ul>
+                        <li>Creare una classe <strong>Cane</strong> contenente una <strong>String</strong> <strong>nome</strong>, creare due oggetti con nomi "Fido" e "Bobi" e stampare i loro nomi.</li>
+                        <li>Confrontare i risultati di comparazione utilizzando <strong>==</strong> e <strong>equals()</strong>.</li>
+                        <li>Realizzare un metodo <strong>equals()</strong> che confronti i nomi dei cani.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Operatori logici</h2>
+                    <p>Gli operatori logici AND (<strong>&&</strong>), OR (<strong>||</strong>) e NOT (<strong>!</strong>) producono un valore <strong>boolean</strong> bsato sulla relazione logica dei suoi argomenti.</p>
+                    <pre><code class="hljs" data-trim contenteditable>
+public class Equivalence2 {
+
+    public static void main(String[] args) {
+        Integer n1 = new Integer(47);
+        Integer n2 = new Integer(47);
+        Integer n3 = new Integer(48);
+        System.out.println(n1.equals(n2) && n1.equals(n3));
+        System.out.println(n1.equals(n2) || n1.equals(n3));
+    }
+}
+
+/* Output:
+false
+true
+*/
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Operatori + e += per String</h2>
+                    <p>In Java gli operatori <strong>+</strong> e <strong>+=</strong> possono essere utilizzati anche per concatenare stringhe.</p>
+                                        <pre><code class="hljs" data-trim contenteditable>
+public class StringOperators {
+
+    public static void main(String[] args) {
+        String a = "1; 2";
+        int b = 3;
+        System.out.println(a);
+        System.out.println("; " + b);
+        a += "; ";
+        System.out.println(a + b);
+    }
+}
+
+/* Output:
+1; 2
+; 3
+1; 2; 3
+*/
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Riferimenti</h2>
+                    <dl>
+                        <dt>Documentazione Java</dt>
+                        <dd><a href="http://docs.oracle.com/javase/">http://docs.oracle.com/javase/</a></dd>
+
+                        <dt>Eckel</dt>
+                        <dd><a href="http://www.mindview.net/Books/">http://www.mindview.net/Books/</a></dd>
+                        <dd>Thinking in Java</dd>
+                        <dd>Thinking in Patterns (with Java)</dd>
+                    </dl>
+                </section>
+
+                <section style="text-align: left;">
+                    <h1>Domande?</h1>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+                // Optional reveal.js plugins
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>

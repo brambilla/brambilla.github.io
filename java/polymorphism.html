@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Polimorfismo - Programmazione orientata agli oggetti in Java</title>
+
+        <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+        <meta name="author" content="Hakim El Hattab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+        <!-- Code syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Polimorfismo</h1>
+                    <h3>Programmazione orientata agli oggetti in Java</h3>
+                    <p><small>Giacomo Brambilla</small></p>
+                    <p><small><a href="http://www.dii.unipr.it">Dipartimento di Ingegneria dell'Informazione</a> - <a href="http://www.unipr.it">Università degli Studi di Parma</a></small></p>
+                    <p><small><a href="https://brambilla.github.io">https://brambilla.github.io</a></small></p>
+                </section>
+
+                <section>
+                    <h2>Polimorfismo</h2>
+                    <p>Il polimorfismo è la terza caratteristica fondamentale di un linguaggio di programmazione ad oggetti, insieme a incapsulamento ed ereditarietà.</p>
+                </section>
+
+                <section>
+                    <h2>Upcasting</h2>
+                    <p>Un aspetto importante dell'ereditarietà è la relazione tra la nuova classe e la classe base, che può essere riassunta con "La nuova classe è un tipo di classe base".</p>
+                    <p>Nell'esempio seguente, una classe base chiamata <strong>Instrument</strong> rappresenta strumenti musicali, e la classe derivata <strong>Wind</strong> rappresenta strumenti a fiato.</p>
+                    <p>Grazie all'ereditarietà tutti i metodi della classe base sono presenti nella classe derivata.</p>
+                </section>
+
+                <section>
+                    <h2>Upcasting</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+class Instrument {
+
+    public void play() {
+    }
+
+    static void tune(Instrument i) {
+        // ...
+        i.play();
+    }
+}
+
+public class Wind extends Instrument {
+
+    public static void main(String[] args) {
+        Wind flute = new Wind();
+        Instrument.tune(flute); // Upcasting
+    }
+}
+                    </code></pre>
+                    <p>La classe <strong>Instrument</strong> ha un metodo <strong>play()</strong> che viene ereditato dalla classe <strong>Wind</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>Upcasting</h2>
+                    <p>Ciò che è interessante nell'esempio precedente è il metodo <strong>tune()</strong>, che per definizione accetta un riferimento a <strong>Instrument</strong>.</p>
+                    <p>Nel metodo <strong>Wind.main()</strong> viene però invocato il metodo <strong>tune()</strong> passando un riferimento a <strong>Wind</strong>.</p>
+                    <p>Questo funziona poiché un oggetto <strong>Wind</strong> è anche un oggetto <strong>Instrument</strong> e non vi sono metodi di <strong>Instrument</strong> che non siano presenti in <strong>Wind</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>Upcasting</h2>
+                    <p>All'interno del metodo <strong>tune()</strong>, il codice funziona per oggetti della classe <strong>Instrument</strong> e di tutte le classi che derivano da questa.</p>
+                    <p>L'operazione automatica di conversione da un riferimento a <strong>Wind</strong> in un riferimento a <strong>Instrument</strong> è detta <em>upcasting</em>.</p>
+                </section>
+
+                <section>
+                    <h2>Ancora sull'upcasting…</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+class Instrument {
+
+    public void play() {
+        System.out.println("Instrument.play()");
+    }
+}
+
+public class Wind extends Instrument {
+
+    public void play() {
+        System.out.println("Wind.play()");
+    }
+}
+
+public class Music {
+
+    public static void tune(Instrument i) {
+        // ...
+        i.play();
+    }
+
+    public static void main(String[] args) {
+        Wind flute = new Wind();
+        tune(flute); // Upcasting
+    }
+}
+
+/* Output:
+Wind.play()
+*/
+                    </code></pre>
+                </section>
+                
+                <section>
+                    <h2>Ancora sull'upcasting…</h2>
+                    <p>Il metodo <strong>Music.tune()</strong> accetta un riferimento a <strong>Instrument</strong> ma anche dai tipi derivati da <strong>Instrument</strong>.</p>
+                    <p>Nel metodo <strong>main()</strong> è infatti passato a <strong>tune()</strong> un riferimento a <strong>Wind</strong>; questo è accettabile in quanto l'interfaccia di <strong>Instrument</strong> esiste in <strong>Wind</strong> dal momento che quest'ultimo ne è un'estensione.</p>
+                </section>
+
+                <section>
+                    <h2>Perché tutto questo?</h2>
+                    <p>Perché <em>dimenticarsi</em> intenzionalmente di quello che è effettivamente il tipo di un oggetto?</p>
+                    <p>Non sarebbe più semplice se <strong>tune()</strong> accettasse direttamente un riferimento ad un oggetto <strong>Wind</strong>?</p>
+                </section>
+
+                <section>
+                    <h2>Overloading invece di upcasting</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+class Stringed extends Instrument {
+
+    public void play() {
+        System.out.println("Stringed.play()";
+    }
+}
+
+class Brass extends Instrument {
+
+    public void play() {
+        System.out.println("Brass.play()");
+    }
+}
+
+public class Music2 {
+
+    public static void tune(Wind i) {
+        i.play();
+    }
+
+    public static void tune(Stringed i) {
+        i.play();
+    }
+
+    public static void tune(Brass i) {
+        i.play();
+    }
+
+    public static void main(String[] args) {
+        Wind flute = new Wind();
+        Stringed violin = new Stringed();
+        Brass frenchHorn = new Brass();
+        tune(flute); // No upcasting
+        tune(violin);
+        tune(frenchHorn);
+    }
+}
+
+/* Output:
+Wind.play()
+Stringed.play()
+Brass.play()
+*/
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Overloading invece di upcasting</h2>
+                    <p>L'esempio precedente funziona, ma ha uno svantaggio: occorre scrivere un metodo specifico per ogni nuova estensione di <strong>Instrument</strong> che viene aggiunta.</p>
+                    <p>Questo comporta molto più lavoro nel caso in cui sia necessario un nuovo tipo di <strong>Instrument</strong> o nel caso occorrano diversi metodi simili a <strong>tune()</strong>.</p>
+                </section>
+
+                <section>
+                    <h2>Polimorfismo</h2>
+                    <p>Non sarebbe più comodo se si potesse scrivere un singolo metodo che accetta una classe base come suo argomento e non metodi specifici per tutte le classi derivate?</p>
+                    <p>Non sarebbe più comodo <em>dimenticarsi</em> che vi siano classi derivate e scrivere il codice solamente per la classe base?</p>
+                    <p class="fragment">Questo è esattamente ciò che comporta il polimorfismo.</p>
+                </section>
+
+                <section>
+                    <h2>Esercizio</h2>
+                    <ul>
+                        <li>Creare una classe <strong>Cycle</strong>, con sottoclassi <strong>Unicycle</strong>, <strong>Bicycle</strong> e <strong>Tricycle</strong>. Dimostrare che per ciascuna istanza di queste classi è possibile l'upcasting a <strong>Cycle</strong> con il metodo </strong>ride()</strong>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Estensibilità</h2>
+                    <p>Grazie al polimorfismo è possibile creare nuovi tipi senza dover necessariamente modificare il metodo <strong>tune()</strong>.</p>
+                    <p>In un programma orientato agli oggetti ben progettato, la maggior parte dei metodi segue il modello di <strong>tune()</strong>, comunicando solamente con le classi base.</p>
+                    <p>Un programma di questo tipo è <em>estensibile</em> poiché è possibile aggiungere nuove funzionalità ereditando nuovi tipi di dato da una classe base comune.</p>
+                    <p>I metodi che manipolano la classe base non devono essere minimamente cambiati per poter gestire le nuove classi derivate.</p>
+                </section>
+
+                <section>
+                    <h2>Progettare con l'ereditarietà</h2>
+                    <p>Una volta scoperto il polimorfismo, può sembrare che tutto sia realizzabile con l'ereditarietà.</p>
+                    <p>In realtà, scegliere subito l'ereditarietà per aggiungere funzionalità ad una classe esistente potrebbe complicare la progettazione del programma.</p>
+                    <p>Un approccio migliore è di scegliere inizialmente la <em>composizione</em> poiché questa non costringe la progettazione in una gerarchia di ereditarietà ma è più flessibile.</p>
+                </section>
+
+                <section>
+                    <h2>Progettare con l'ereditarietà</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
+class Actor {
+
+    public void act() {
+    }
+}
+
+class HappyActor extends Actor {
+
+    public void act() {
+        System.out.println("HappyActor");
+    }
+}
+
+class SadActor extends Actor {
+
+    public void act() {
+        System.out.println("SadActor");
+    }
+}
+
+class Stage {
+
+    private Actor actor = new HappyActor();
+
+    public void change() {
+        actor = new SadActor();
+    }
+
+    public void performPlay() {
+        actor.act();
+    }
+}
+
+public class Transmogrify {
+
+    public static void main(String[] args) {
+        Stage stage = new Stage();
+        stage.performPlay();
+        stage.change();
+        stage.performPlay();
+    }
+}
+
+/*
+Output:
+HappyActor
+SadActor
+*/
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Progettare con l'ereditarietà</h2>
+                    <p>Un oggetto <strong>Stage</strong> contiene un riferimento ad un <strong>Actor</strong> che è inizializzato ad un oggetto <strong>HappyActor</strong>.</p>
+                    <p>Questo significa che <strong>performPlay()</strong> produce un comportamento particolare ma, dal momento che è possibile modificare il riferimento in fase di esecuzione, <strong>actor</strong> può riferirsi ad un oggetto <strong>SadActor</strong> e il comportamento prodotto da <strong>performPlay()</strong> può quindi cambiare.</p>
+                </section>
+
+                <section>
+                    <h2>Progettare con l'ereditarietà</h2>
+                    <p>Una linea guida è "Utilizzare l'ereditarietà per esprimere differenze di comportamento, e i campi per esprimere variazioni nello stato."</p>
+                    <p>Nell'esempio precedente sono ereditate due differenti classi per esprimere differentemente il metodo <strong>act()</strong> mentre la classe <strong>Stage</strong> utilizza la composizione per permettere al proprio stato di essere cambiato.</p>
+                    <p>In questo caso, è proprio il cambiamento di stato che produce un cambiamento nel comportamento.</p>
+                </section>
+
+                <section>
+                    <h2>Esercizio</h2>
+                    <ul>
+                        <li>Creare una classe <strong>Starship</strong>, contenente un riferimento ad <strong>AlertStatus</strong> che può rappresentare 3 differenti stati di allerta. Includere metodi per modificare gli stati.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Riferimenti</h2>
+                    <dl>
+                        <dt>Documentazione Java</dt>
+                        <dd><a href="http://docs.oracle.com/javase/">http://docs.oracle.com/javase/</a></dd>
+
+                        <dt>Eckel</dt>
+                        <dd><a href="http://www.mindview.net/Books/">http://www.mindview.net/Books/</a></dd>
+                        <dd>Thinking in Java</dd>
+                        <dd>Thinking in Patterns (with Java)</dd>
+                    </dl>
+                </section>
+
+                <section style="text-align: left;">
+                    <h1>Domande?</h1>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+                // Optional reveal.js plugins
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
