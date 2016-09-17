@@ -1,0 +1,76 @@
+body {
+  background: #FFFFFF;
+}
+
+#chat {
+  height: 80vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-color: #666666;
+  border-style: solid;
+  border-width: thin;
+  background: #FFFFFF;
+  display: none;
+}
+
+#map {
+  height: 80vh;
+  border-color: #666666;
+  border-style: solid;
+  border-width: thin;
+}
+
+.me {
+  background: #ECECEC;
+  color: #333333;
+  text-align: right;
+  clear: both;
+  font-weight: bold;
+}
+
+.them {
+  background: #00A0E1;
+  color: #FFFFFF;
+  text-align: left;
+  clear: both;
+  font-weight: bold;
+}
+
+#text {
+  margin-top: 8px;
+  width: 70%;
+  float:left;
+}
+
+#send-button {
+  margin-top: 8px;
+  width: 20%;
+  float:right;
+  cursor: pointer;
+}
+
+#chat-button {
+  width: 50%;
+  float: right;
+  color: #333333;
+  text-align: center;
+  text-decoration: none;
+  border-color: #666666;
+  border-style: solid;
+  border-width: thin;
+  background-color: #C1C1C1;
+  cursor: pointer;
+}
+
+#map-button {
+  width: 50%;
+  float: left;
+  color: #333333;
+  text-align: center;
+  text-decoration: none;
+  border-color: #666666;
+  border-style: solid;
+  border-width: thin;
+  background-color: #FFFFFF;
+  cursor: not-allowed;
+}

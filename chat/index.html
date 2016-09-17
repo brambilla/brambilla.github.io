@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Adaptive Distributed Geographic Table (ADGT)</title>
+        <link rel="shortcut icon" type="image/png" href="/img/favicon.png"/>
+        <meta name="description" content="A location-aware peer-to-peer overlay scheme">
+        <meta name="viewport" content="width=device-width">
+        
+        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="css/leaflet.css" />
+       
+        <script type="text/javascript" src="js/libs/leaflet.js" defer></script>
+        <script type="text/javascript" src="js/libs/leaflet.rotatedMarker.js" defer></script>
+        
+        <script type="text/javascript" src="js/libs/jquery-2.2.3.min.js" defer></script>
+        <script type="text/javascript" src="js/libs/adgt.js" defer></script>
+        <script type="text/javascript" src="js/app.js" defer></script>
+    </head>
+    <body>
+       
+        <div>
+            <input type="button" id="map-button" value="Map">
+            <input type="button" id="chat-button" value="Chat">
+        </div>
+        <div id="chat"></div>
+        <div id="map"></div>
+        <div>
+            <input type="text" id="text" placeholder="Geocast a message…">
+            <input type="button" id="send-button" value="→">
+        </div>
+
+    </body>
+</html>
