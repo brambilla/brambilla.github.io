@@ -524,6 +524,7 @@ Peer.prototype.emit = function() {
 
 Peer.prototype.move = function(position) {
     var p = {coords: {latitude: position.coords.latitude, longitude: position.coords.longitude, accuracy: position.coords.accuracy, altitude: position.coords.altitude, altitudeAccuracy: position.coords.altitudeAccuracy, heading: position.coords.heading, speed: position.coords.speed}, timestamp: position.timestamp};
+    console.log('Position: ' + JSON.stringify(p));
     this.descriptor.position = p;
     if(this.geobucket.move(p)) {
         this.emit("neighbors", this.geobucket.descriptors());
