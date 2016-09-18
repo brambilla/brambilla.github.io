@@ -157,7 +157,7 @@ document.getElementById('send-button').onclick = function() {
 
         peer.geocast({id: id, creator:peer.descriptor.key, coords: coords, text:text});
 
-        performance('S', id);
+        tracking('S', id);
 
         document.getElementById('text').value = '';
         document.getElementById('chat').insertAdjacentHTML('beforeend', '<p class="me">' + text + '</p>');
@@ -186,7 +186,7 @@ peer.on("data", function(descriptor, data) {
 
         forward(id);
 
-        performance('R', id);
+        tracking('R', id);
 
         document.getElementById('chat').insertAdjacentHTML('beforeend', '<p class="them">' + text + '</p>');
         document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
@@ -194,8 +194,6 @@ peer.on("data", function(descriptor, data) {
 });
 
 peer.connect();
-
-performance('C', peer.descriptor.key);
 
 navigator.geolocation.watchPosition(function(position) {
     peer.move(position);
@@ -205,6 +203,8 @@ navigator.geolocation.watchPosition(function(position) {
     }
     marker.setRotationAngle(position.coords.heading);
     map.panTo(L.latLng(position.coords.latitude, position.coords.longitude));
+    
+    tracking('U', null);
 });
 
 function forward(id) {
@@ -225,6 +225,6 @@ function forward(id) {
     }
 }
 
-function performance(type, body) {
-    peer.bootstrappingNode.send({sender: peer.descriptor, type: 'PERFORMANCE', payload:{type: type, body: body}});
+function tracking(type, body) {
+    peer.bootstrappingNode.send({sender: peer.descriptor, type: 'TRACKING', payload:{type: type, body: body}});
 }
