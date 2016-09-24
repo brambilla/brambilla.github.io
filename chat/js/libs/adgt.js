@@ -62,8 +62,8 @@ Geography.heading = function(latitude1, longitude1, latitude2, longitude2) {
 
 /** Return a mock position **/
 Geography.mockPosition = function() {
-    var latitude = 44.76500;
-    var longitude = 10.31019;
+    var latitude = 44.7265026;//44.76500;
+    var longitude = 10.3952777;//10.31019;
     var heading = Math.random() * 360.0;
     var distance = Math.random() * 2000;
     var speed = Math.random()*36.11;
