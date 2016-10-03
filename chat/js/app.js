@@ -160,7 +160,7 @@ document.getElementById('send-button').onclick = function() {
         tracking('S', id);
 
         document.getElementById('text').value = '';
-        document.getElementById('chat').insertAdjacentHTML('beforeend', '<p class="me">' + text + '</p>');
+        document.getElementById('chat').insertAdjacentHTML('beforeend', '<p class="me">[' + peer.descriptor.key + '] ' + text + '</p>');
         document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
     }
 };
@@ -188,7 +188,7 @@ peer.on("data", function(descriptor, data) {
 
         tracking('R', id);
 
-        document.getElementById('chat').insertAdjacentHTML('beforeend', '<p class="them">' + text + '</p>');
+        document.getElementById('chat').insertAdjacentHTML('beforeend', '<p class="them">[' + creator + '] ' + text + '</p>');
         document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
     }
 });
