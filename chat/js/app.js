@@ -81,12 +81,20 @@ var tileLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.pn
     id: 'mapbox.streets'
 }).addTo(map);
 
-var icon_peer = L.icon({
-    iconUrl: 'img/marker.png'
+var icon_peer_blue = L.icon({
+    iconUrl: 'img/marker_blue.png'
 });
 
-var icon_peer_heading = L.icon({
-    iconUrl: 'img/marker_heading.png'
+var icon_peer_heading_blue = L.icon({
+    iconUrl: 'img/marker_heading_blue.png'
+});
+
+var icon_peer_red = L.icon({
+    iconUrl: 'img/marker_red.png'
+});
+
+var icon_peer_heading_red = L.icon({
+    iconUrl: 'img/marker_heading_red.png'
 });
 
 var icon_message = L.icon({
@@ -95,11 +103,11 @@ var icon_message = L.icon({
 
 var marker = L.marker([peer.descriptor.position.coords.latitude, peer.descriptor.position.coords.longitude], {
     rotationAngle: 0,
-    icon: icon_peer
+    icon: icon_peer_red
 }).addTo(map);
 
 if(peer.descriptor.position.coords.speed > 0) {
-    marker.setIcon(icon_peer_heading);
+    marker.setIcon(icon_peer_heading_red);
     marker.setRotationAngle(peer.descriptor.position.coords.heading);
 }
 
@@ -115,12 +123,12 @@ peer.on("neighbors", function(descriptors) {
         if(descriptor.position.coords.speed > 0) {
             peer_markers.addLayer(L.marker([descriptor.position.coords.latitude, descriptor.position.coords.longitude], {
                 rotationAngle: descriptor.position.coords.heading,
-                icon: icon_peer_heading
+                icon: icon_peer_heading_blue
             }));
         } else {
             peer_markers.addLayer(L.marker([descriptor.position.coords.latitude, descriptor.position.coords.longitude], {
                 rotationAngle: descriptor.position.coords.heading,
-                icon: icon_peer
+                icon: icon_peer_blue
             }));
         }
     }
@@ -199,7 +207,9 @@ navigator.geolocation.watchPosition(function(position) {
     peer.move(position);
     marker.setLatLng(L.latLng(position.coords.latitude, position.coords.longitude));
     if(position.coords.speed > 0) {
-        marker.setIcon(icon_heading);
+        marker.setIcon(icon_peer_heading_red);
+    } else {
+        marker.setIcon(icon_peer_red);
     }
     marker.setRotationAngle(position.coords.heading);
     map.panTo(L.latLng(position.coords.latitude, position.coords.longitude));
