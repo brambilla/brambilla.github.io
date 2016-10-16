@@ -230,7 +230,7 @@ function forward(id) {
     }
 
     for(var recipient of recipients) {
-        messages.get(id).descriptors.add(recipient);
+        messages.get(id).descriptors.add(recipient.key);
         peer.send({id: messages.get(id).id, creator: messages.get(id).creator, coords: messages.get(id).coords, text: messages.get(id).text}, recipient);
     }
 }
