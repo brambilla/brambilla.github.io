@@ -147,7 +147,7 @@ document.getElementById('send-button').onclick = function() {
         var coords = peer.descriptor.position.coords;
         var descriptors = new Set();
         for(var descriptor of peer.geobucket.descriptors()) {
-            descriptors.add(descriptor);
+            descriptors.add(descriptor.key);
         }
 
         messages.set(id, {id: id, creator:peer.descriptor.key, coords: coords, text: text, descriptors: descriptors});
