@@ -180,6 +180,7 @@ peer.on("data", function(descriptor, data) {
         var coords = data.coords;
         var creator = data.creator;
         var descriptors = new Set();
+        descriptors.add(descriptor.key);
         messages.set(id, {id: id, creator:creator, coords: coords, text:text, descriptors: descriptors});
 
         var popup;
