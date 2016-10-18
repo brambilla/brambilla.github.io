@@ -124,12 +124,12 @@ peer.on("neighbors", function(descriptors) {
             peer_markers.addLayer(L.marker([descriptor.position.coords.latitude, descriptor.position.coords.longitude], {
                 rotationAngle: descriptor.position.coords.heading,
                 icon: icon_peer_heading_blue
-            }));
+            }).bindPopup(descriptor.key));
         } else {
             peer_markers.addLayer(L.marker([descriptor.position.coords.latitude, descriptor.position.coords.longitude], {
                 rotationAngle: descriptor.position.coords.heading,
                 icon: icon_peer_blue
-            }));
+            }).bindPopup(descriptor.key));
         }
     }
 });
