@@ -146,11 +146,12 @@ document.getElementById('send-button').onclick = function() {
         var id = Math.random().toString().replace('.', '') + '@' + peer.descriptor.key;
         var coords = peer.descriptor.position.coords;
         var descriptors = new Set();
+        var now = new Date();
         for(var descriptor of peer.geobucket.descriptors()) {
             descriptors.add(descriptor.key);
         }
 
-        messages.set(id, {id: id, creator:peer.descriptor.key, coords: coords, text: text, descriptors: descriptors});
+        messages.set(id, {id: id, creator:peer.descriptor.key, coords: coords, text: text, descriptors: descriptors, time: now.getTime()});
 
 
         var popup;
@@ -163,12 +164,12 @@ document.getElementById('send-button').onclick = function() {
             icon: icon_message
         }).addTo(map).bindPopup(popup);
 
-        peer.geocast({id: id, creator:peer.descriptor.key, coords: coords, text:text});
+        peer.geocast({id: id, creator:peer.descriptor.key, coords: coords, text:text, time: now.getTime()});
 
         tracking('S', id);
 
         document.getElementById('text').value = '';
-        document.getElementById('chat').insertAdjacentHTML('beforeend', '<p class="me">[' + peer.descriptor.key + '] ' + text + '</p>');
+        document.getElementById('chat').insertAdjacentHTML('beforeend', '<p class="me">[' + peer.descriptor.key + '] ' + text + ' (' + now.getHours() + ':' + now.getMinutes() + ')</p>');
         document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
     }
 };
@@ -180,8 +181,9 @@ peer.on("data", function(descriptor, data) {
         var coords = data.coords;
         var creator = data.creator;
         var descriptors = new Set();
+        var date = new Date(data.time);
         descriptors.add(descriptor.key);
-        messages.set(id, {id: id, creator:creator, coords: coords, text:text, descriptors: descriptors});
+        messages.set(id, {id: id, creator:creator, coords: coords, text:text, descriptors: descriptors, time: date.getTime()});
 
         var popup;
         if(text.length < 30) {
@@ -197,7 +199,7 @@ peer.on("data", function(descriptor, data) {
 
         tracking('R', id);
 
-        document.getElementById('chat').insertAdjacentHTML('beforeend', '<p class="them">[' + creator + '] ' + text + '</p>');
+        document.getElementById('chat').insertAdjacentHTML('beforeend', '<p class="them">[' + creator + '] ' + text + ' (' + date.getHours() + ':' + date.getMinutes() + ')</p>');
         document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
     }
 });
