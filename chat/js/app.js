@@ -169,7 +169,7 @@ document.getElementById('send-button').onclick = function() {
         tracking('S', id);
 
         document.getElementById('text').value = '';
-        document.getElementById('chat').insertAdjacentHTML('beforeend', '<p class="me">[' + peer.descriptor.key + '] ' + text + ' (' + now.getHours() + ':' + now.getMinutes() + ')</p>');
+        document.getElementById('chat').insertAdjacentHTML('beforeend', '<p class="me">[' + peer.descriptor.key + '] ' + text + ' (' + printTime(now) + ')</p>');
         document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
     }
 };
@@ -199,7 +199,7 @@ peer.on("data", function(descriptor, data) {
 
         tracking('R', id);
 
-        document.getElementById('chat').insertAdjacentHTML('beforeend', '<p class="them">[' + creator + '] ' + text + ' (' + date.getHours() + ':' + date.getMinutes() + ')</p>');
+        document.getElementById('chat').insertAdjacentHTML('beforeend', '<p class="them">[' + creator + '] ' + text + ' (' + printTime(date) + ')</p>');
         document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
     }
 });
@@ -219,6 +219,22 @@ navigator.geolocation.watchPosition(function(position) {
     
     tracking('U', null);
 });
+
+function printTime(date) {
+  var hours = date.getHours();
+  if(hours < 10) {
+    hours = '0' + hours;
+  }
+  var minutes = date.getMinutes();
+  if(minutes < 10) {
+    minutes = '0' + minutes;
+  }
+  var seconds = date.getSeconds();
+  if(seconds < 10) {
+    seconds = '0' + seconds;
+  }
+  return hours + ':' + minutes + ':' + seconds;
+}
 
 function forward(id) {
     var recipients = new Set();
