@@ -2443,10 +2443,13 @@ var callback;
 
 var index = Math.floor(Math.random() * positions.length);
 var intervalId = window.setInterval(function() {
+    console.log('interval');
     if(callback) {
         var position = positions[index];
         position.timestamp = Date.now();
+        console.log('position: ' + JSON.stringify(position));
         callback(position);
+        index = (index + 1) % positions.length;
     }
 }, positions[index].delay);
 
