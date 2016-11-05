@@ -1408,7 +1408,7 @@ var positions = [{
 		"longitude": 10.30431418,
 		"altitude": 114.0,
 		"speed": 2.25,
-		"heading": 296.0
+		"heading": 116.0
 	},
 	"delay": 1000
 }, {
@@ -1417,7 +1417,7 @@ var positions = [{
 		"longitude": 10.30432487,
 		"altitude": 113.0,
 		"speed": 1.75,
-		"heading": 296.0
+		"heading": 116.0
 	},
 	"delay": 1000
 }, {
@@ -1426,7 +1426,7 @@ var positions = [{
 		"longitude": 10.30434483,
 		"altitude": 113.0,
 		"speed": 2.0,
-		"heading": 296.0
+		"heading": 116.0
 	},
 	"delay": 1000
 }, {
@@ -2443,11 +2443,9 @@ var callback;
 
 var index = Math.floor(Math.random() * positions.length);
 var intervalId = window.setInterval(function() {
-    console.log('interval');
     if(callback) {
         var position = positions[index];
         position.timestamp = Date.now();
-        console.log('position: ' + JSON.stringify(position));
         callback(position);
         index = (index + 1) % positions.length;
     }
