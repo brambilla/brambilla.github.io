@@ -206,7 +206,14 @@ peer.on("data", function(descriptor, data) {
 
 peer.connect();
 
-navigator.geolocation.watchPosition(function(position) {
+watchPosition(managePosition(position));
+
+navigator.geolocation.watchPosition(function (position) {
+  clearWatch();
+  managePosition(position);
+});
+
+function managePosition(position) {
     peer.move(position);
     marker.setLatLng(L.latLng(position.coords.latitude, position.coords.longitude));
     if(position.coords.speed > 0) {
@@ -218,7 +225,7 @@ navigator.geolocation.watchPosition(function(position) {
     map.panTo(L.latLng(position.coords.latitude, position.coords.longitude));
     
     tracking('U', null);
-});
+}
 
 function printTime(date) {
   var hours = date.getHours();
