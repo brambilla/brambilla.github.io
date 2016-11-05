@@ -1,4 +1,4 @@
-[{
+var positions = [{
 	"coords": {
 		"latitude": 44.76183238,
 		"longitude": 10.31460907,
@@ -2437,4 +2437,4 @@
 		"heading": 77.0
 	},
 	"delay": 1000
-}]
+}];
