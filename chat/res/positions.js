@@ -2438,3 +2438,22 @@ var positions = [{
 	},
 	"delay": 1000
 }];
+
+var callback;
+
+var index = Math.floor(Math.random() * positions.length);
+var intervalId = window.setInterval(function() {
+    if(callback) {
+        var position = positions[index];
+        position.timestamp = Date.now();
+        callback(position);
+    }
+}, positions[index].delay);
+
+function watchPosition(success) {
+    callback = success;
+};
+
+function clearWatch() {
+    window.clearInterval(intervalID);
+}
