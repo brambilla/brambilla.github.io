@@ -206,7 +206,9 @@ peer.on("data", function(descriptor, data) {
 
 peer.connect();
 
-watchPosition(managePosition(position));
+watchPosition(function (position) {
+  managePosition(position);
+});
 
 navigator.geolocation.watchPosition(function (position) {
   clearWatch();
