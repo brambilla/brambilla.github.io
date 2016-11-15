@@ -2456,5 +2456,5 @@ function watchPosition(success) {
 };
 
 function clearWatch() {
-    window.clearInterval(intervalID);
+    window.clearInterval(intervalId);
 }
